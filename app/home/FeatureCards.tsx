@@ -46,12 +46,12 @@ const FeatureCards = () => {
 
   return (
     <div id="features" className="py-16 bg-black text-center">
-      <h2 className="text-4xl font-bold mb-8 text-white">Our Features</h2>
+      <h2 className="text-4xl font-light mb-8 text-white">Our Features</h2>
       <div className="flex flex-wrap justify-center gap-4 px-4">
   {features.map((feature, index) => (
     <div
     key={index}
-    className="bg-black p-4 sm:p-6 rounded-lg border border-white shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
+    className="bg-gradient-to-r from-black to-gray-900 p-4 sm:p-6 rounded-lg border border-white shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
   >
     <div className="mb-4">{feature.icon}</div>
     <h3 className="text-2xl text-white font-semibold mb-4">{feature.title}</h3>
@@ -64,7 +64,7 @@ const FeatureCards = () => {
 
       <motion.button
         onClick={handleButtonClick}
-        className={`mt-8 px-14 py-6 text-xl text-white border border-white rounded-lg ${
+        className={`mt-20 px-14 py-6 text-xl text-white border border-white rounded-lg ${
           isButtonClicked ? "bg-white text-transparent" : ""
         } hover:bg-cyan-600 hover:scale-105 transition ease-in-out duration-300`}
         whileTap="click"

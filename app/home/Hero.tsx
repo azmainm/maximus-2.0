@@ -20,7 +20,7 @@ const Hero = () => {
       </div>
       <h2 className="font-poppins text-4xl font-medium mb-4 text-center">
             Shape Your
-    </h2>
+      </h2>
       <div className="text-center font-bold mb-8">
         <motion.h1
           className="font-poppins text-7xl inline-block"
@@ -49,9 +49,9 @@ const Hero = () => {
       </div>
       <motion.button
   onClick={scrollToFeatures}
-  className="flex items-center justify-center w-0 h-0 border border-white rounded-full hover:bg-cyan-600 hover:scale-110 transition-transform duration-300"
+  className="flex items-center justify-center w-10 h-10 border border-white rounded-full hover:bg-cyan-600 hover:scale-110 transition-transform duration-300"
 >
-  <span className="text-white text-3xl">↓</span>
+  <span className="text-white text-3xl mt-20">↓</span>
 </motion.button>
 
     </motion.div>
