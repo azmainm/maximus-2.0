@@ -27,7 +27,7 @@ const FoodForm = ({ onFormSubmit }: { onFormSubmit: (formData: FoodFormData) => 
           type="text"
           value={foodName}
           onChange={(e) => setFoodName(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
           placeholder="e.g., Apple"
           required
         />
@@ -38,7 +38,7 @@ const FoodForm = ({ onFormSubmit }: { onFormSubmit: (formData: FoodFormData) => 
           type="text"
           value={quantity}
           onChange={(e) => setQuantity(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
           placeholder="e.g., 2 pcs"
           required
         />
@@ -48,7 +48,7 @@ const FoodForm = ({ onFormSubmit }: { onFormSubmit: (formData: FoodFormData) => 
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-500"
+          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
           placeholder="Additional details about the food such as ingredients or details of quantity"
         ></textarea>
       </div>
