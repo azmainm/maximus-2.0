@@ -5,8 +5,8 @@ export async function POST(req: Request) {
   try {
     const { prompt } = await req.json();
 
-    // Replace this with OpenAI API call
-    const mockResponse = `Calories: 250\nProtein: 10g\nCarbs: 30g\nFats: 10g`;
+    // Mock response using the prompt for demonstration
+    const mockResponse = `You entered: ${prompt}\nCalories: 250\nProtein: 10g\nCarbs: 30g\nFats: 10g`;
 
     return NextResponse.json({ response: mockResponse });
   } catch (error) {
