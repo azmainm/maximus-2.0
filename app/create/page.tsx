@@ -1,9 +1,13 @@
 // app/create/page.tsx
-import React from "react";
+"use client";
+import CreatePost from './components/CreatePost';
 
 const CreatePage = () => {
-  return <div>Your Create Content</div>;
+  return (
+    <div>
+      <CreatePost />
+    </div>
+  );
 };
 
 export default CreatePage;
-

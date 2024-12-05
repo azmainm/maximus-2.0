@@ -54,7 +54,7 @@ const FoodForm = ({ onFormSubmit }: { onFormSubmit: (formData: FoodFormData) => 
       </div>
       <button
         type="submit"
-        className="w-full py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-cyan-600 transition duration-200"
+        className="w-full py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-cyan-600 hover:text-gray-100 transition duration-200"
       >
         Calculate
       </button>

@@ -1,3 +1,4 @@
+//app/blog/components/Modal.tsx
 "use client";
 
 import { useRouter } from "next/navigation";

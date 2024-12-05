@@ -1,3 +1,4 @@
+//app/data/articles.tsx
 export interface Article {
     id: number;
     title: string;
