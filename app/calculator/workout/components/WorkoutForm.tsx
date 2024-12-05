@@ -55,7 +55,7 @@ const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormDat
               checked={sex === "Male"}
               onChange={(e) => setSex(e.target.value)}
             />
-            Male
+          Male
           </label>
           <label>
             <input
@@ -65,7 +65,7 @@ const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormDat
               checked={sex === "Female"}
               onChange={(e) => setSex(e.target.value)}
             />
-            Female
+             Female
           </label>
         </div>
       </div>
@@ -133,7 +133,7 @@ const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormDat
       </div>
       <button
         type="submit"
-        className="w-full py-2 text-gray-900 bg-gray-400 rounded-md hover:bg-cyan-600 transition duration-200"
+        className="w-full py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-cyan-600 transition duration-200"
       >
         Calculate
       </button>

@@ -5,7 +5,7 @@ import { useState } from "react";
 import TabSwitcher from "./components/TabSwitcher";
 import FoodForm from "./components/FoodForm";
 import FoodResponse from "./components/FoodResponse";
-import Navbar from "C:/Users/hp/Desktop/maximus-2.0/app/ui/Navbar";
+import Navbar from "../../ui/Navbar";
 
 interface FoodFormData {
   foodName: string;

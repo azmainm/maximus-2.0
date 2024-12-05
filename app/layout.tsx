@@ -17,6 +17,7 @@ export default function RootLayout({
       <head>
         <title>Maximus</title>
         <meta name="description" content="Azmain Morshed" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="icon" href="/logo_s.png" type="image/png" />
       </head>
       <body

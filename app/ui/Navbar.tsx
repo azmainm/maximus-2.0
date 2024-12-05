@@ -38,7 +38,7 @@ const Navbar = ({ isLoggedIn, handleLogout }: NavbarProps) => {
         {/* Logo */}
         <div className="flex items-center">
           <Image
-            src="/images/logo_s.png"
+            src="/images/logo_s2.png"
             alt="Maximus Logo"
             width={40}
             height={40}

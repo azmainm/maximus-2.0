@@ -10,7 +10,7 @@ const TabSwitcher = () => {
   const getButtonClass = (path: string) =>
     `py-1 px-4 ${
       pathname === path
-        ? "bg-gray-400 text-gray-900 border-b border-cyan-500"
+        ? "bg-gray-200 text-gray-900 border-b border-cyan-500"
         : "bg-gray-800 hover:bg-cyan-900 hover:text-gray-50"
     }`;
 
