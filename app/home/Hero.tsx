@@ -14,7 +14,7 @@ const Hero = () => {
   };
 
   return (
-    <motion.div className="h-[70vh] flex flex-col justify-center items-center bg-black text-white">
+    <motion.div className="h-screen flex flex-col justify-center items-center bg-black text-white">
       <div className="flex items-center mb-6">
         <Image src="/images/logo.png" alt="Logo" width={120} height={120} />
       </div>

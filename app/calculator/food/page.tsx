@@ -5,6 +5,7 @@ import { useState } from "react";
 import TabSwitcher from "./components/TabSwitcher";
 import FoodForm from "./components/FoodForm";
 import FoodResponse from "./components/FoodResponse";
+import Navbar from "C:/Users/hp/Desktop/maximus-2.0/app/ui/Navbar";
 
 interface FoodFormData {
   foodName: string;
@@ -16,7 +17,11 @@ const FoodCalculator = () => {
   const [prompt, setPrompt] = useState(""); // Stores the formatted prompt
   const [response, setResponse] = useState(""); // Stores the response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-
+  const isLoggedIn = true; // Replace with actual authentication logic
+  const handleLogout = () => {
+    console.log("Logout logic here");
+  };
+  
   const handleFormSubmit = (formData: FoodFormData) => {
     const formattedPrompt = `Food: ${formData.foodName}\nQuantity: ${formData.quantity}\nDescription: ${formData.description}`;
     setPrompt(formattedPrompt);
@@ -40,9 +45,10 @@ const FoodCalculator = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <TabSwitcher />
       <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-xl text-cyan-100 font-light mb-4 text-center">Food Macro Calculator</h1>
+        <h1 className="text-xl text-gray-100 font-light mb-4 text-center">Food Macro Calculator</h1>
         <FoodForm onFormSubmit={handleFormSubmit} />
         {/* Render FoodResponse with placeholders until data is updated */}
         <FoodResponse

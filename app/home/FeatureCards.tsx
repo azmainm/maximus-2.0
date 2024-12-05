@@ -14,17 +14,17 @@ const FeatureCards = () => {
     {
       title: "Food Calculator",
       description: "Track your meals and macros.",
-      icon: <FaAppleAlt className="text-white text-5xl mb-4" />,
+      icon: <FaAppleAlt className="text-gray-300 text-5xl mb-4" />,
     },
     {
       title: "Workout Calculator",
       description: "Plan and track workouts.",
-      icon: <FaDumbbell className="text-white text-5xl mb-4" />,
+      icon: <FaDumbbell className="text-gray-300 text-5xl mb-4" />,
     },
     {
       title: "Blog",
       description: "Read articles on health and fitness.",
-      icon: <FaBook className="text-white text-5xl mb-4" />,
+      icon: <FaBook className="text-gray-300 text-5xl mb-4" />,
     },
   ];
 
@@ -45,13 +45,13 @@ const FeatureCards = () => {
   };
 
   return (
-    <div id="features" className="py-16 bg-black text-center">
+    <div id="features" className=" bg-black text-center">
       <h2 className="text-3xl font-light mb-8 text-white">Our Features</h2>
       <div className="flex flex-wrap justify-center gap-4 px-4">
   {features.map((feature, index) => (
     <div
     key={index}
-    className="bg-gradient-to-r from-black to-gray-900 px-3 py-3 sm:p-6 rounded-lg border border-black shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
+    className="bg-gradient-to-r from-black to-black via-gray-900 px-3 py-3 sm:p-6 rounded-lg border border-black shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
   >
     <div className="mb-4">{feature.icon}</div>
     <h3 className="text-2xl text-white font-semibold mb-4">{feature.title}</h3>
