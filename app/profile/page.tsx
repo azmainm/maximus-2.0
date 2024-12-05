@@ -55,9 +55,9 @@ const Profile = () => {
 
       <div className="min-h-screen flex flex-col items-center bg-gray-900 text-white font-poppins p-4">
         {/* Top Card with User Information */}
-        <div className="w-full max-w-4xl p-6 mb-6 bg-gray-900 border border-cyan-200 rounded-md shadow-md">
+        <div className="w-full max-w-4xl p-6 mb-6 bg-gray-900 border border-gray-300 rounded-md shadow-md">
           <h1 className="text-3xl font-bold mb-2">
-            <span className="text-cyan-200">{userInfo.full_name}</span>
+            <span className="text-gray-300">{userInfo.full_name}</span>
           </h1>
           <p className="text-md mb-2">
             <span className="text-cyan-100">Email: </span>
@@ -91,19 +91,19 @@ const Profile = () => {
           {userArticles.map((article) => (
             <div
               key={article.id}
-              className="relative p-4 rounded-md border border-cyan-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
+              className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
               style={{ height: '120px' }}  // Fixed height to ensure buttons don't overlap
             >
               <h3 className="text-xl font-bold mb-2">{article.title}</h3>
               <button
                 onClick={() => openModal(article)}
-                className="absolute top-2 right-2 bg-gray-900 text-white border border-cyan-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
+                className="absolute top-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
               >
                 <FiArrowUpRight />
               </button>
               <button
                 onClick={() => handleDeleteArticle(article.id)}
-                className="absolute bottom-2 right-2 bg-gray-900 text-white border border-cyan-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
+                className="absolute bottom-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
               >
                 <FiTrash2 />
               </button>
@@ -117,13 +117,13 @@ const Profile = () => {
           {favoriteArticles.map((article) => (
             <div
               key={article.id}
-              className="relative p-4 rounded-md border border-cyan-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
+              className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
               style={{ height: '120', width:'280' }} 
             >
               <h3 className="text-xl font-bold mb-2">{article.title}</h3>
               <button
                 onClick={() => openModal(article)}
-                className="absolute top-2 right-2 bg-gray-900 text-white border border-cyan-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
+                className="absolute top-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
               >
                 <FiArrowUpRight />
               </button>
@@ -144,12 +144,12 @@ const Profile = () => {
         {/* Deletion Success Modal */}
         {showDeletionModal && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-            <div className="relative w-11/12 md:w-1/2 lg:w-1/3 p-6 bg-black border border-cyan-300 rounded-lg shadow-lg text-white">
+            <div className="relative w-11/12 md:w-1/2 lg:w-1/3 p-6 bg-black border border-gray-300 rounded-lg shadow-lg text-white">
               <h2 className="text-2xl font-bold mb-4">Article Deleted</h2>
               <p className="mb-6">The article has been deleted successfully.</p>
               <button
                 onClick={() => setShowDeletionModal(false)}
-                className="px-6 py-2 bg-black border border-cyan-300 rounded-lg hover:bg-cyan-800 transition ease-in-out duration-200"
+                className="px-6 py-2 bg-black border border-gray-300 rounded-lg hover:bg-cyan-800 transition ease-in-out duration-200"
               >
                 Okay
               </button>
@@ -160,19 +160,19 @@ const Profile = () => {
         {/* Deletion Confirmation Modal */}
 {showConfirmationModal && (
   <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
-    <div className="relative w-80 p-6 bg-black border border-cyan-300 rounded-lg shadow-lg text-white">
+    <div className="relative w-80 p-6 bg-black border border-gray-300 rounded-lg shadow-lg text-white">
       <h2 className="text-2xl font-bold mb-4">Are you sure?</h2>
       <p className="mb-6">Do you really want to delete this article? This process cannot be undone.</p>
       <div className="flex justify-center space-x-4">
         <button
           onClick={confirmDeletion}
-          className="px-6 py-2 bg-red-600 border border-cyan-300 rounded-lg hover:bg-red-700 transition ease-in-out duration-200"
+          className="px-6 py-2 bg-red-600 border border-gray-300 rounded-lg hover:bg-red-700 transition ease-in-out duration-200"
         >
           Yes
         </button>
         <button
           onClick={cancelDeletion}
-          className="px-6 py-2 bg-gray-700 border border-cyan-300 rounded-lg hover:bg-gray-600 transition ease-in-out duration-200"
+          className="px-6 py-2 bg-gray-700 border border-gray-300 rounded-lg hover:bg-gray-600 transition ease-in-out duration-200"
         >
           No
         </button>

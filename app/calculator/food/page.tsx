@@ -17,7 +17,7 @@ const FoodCalculator = () => {
   const [prompt, setPrompt] = useState(""); // Stores the formatted prompt
   const [response, setResponse] = useState(""); // Stores the response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const isLoggedIn = true; // Replace with actual authentication logic
+  const isLoggedIn = false; // Replace with actual authentication logic
   const handleLogout = () => {
     console.log("Logout logic here");
   };
