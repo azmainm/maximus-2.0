@@ -27,20 +27,24 @@ const BlogPage = () => {
       <Navbar isLoggedIn={true} handleLogout={() => console.log("Logout")} />
 
       {/* Search and Plus Button */}
-      <div className="flex items-center justify-between px-6 py-4 max-w-4xl mx-auto">
-        <input
-          type="text"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder="Search articles..."
-          className="flex-grow p-2 rounded-md bg-gray-900 border border-gray-300 text-white"
-        />
-        <Link href="/create">
-          <button className="ml-4 p-2 rounded-full border border-gray-300 text-white hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200 flex items-center justify-center">
-            <FiPlus />
-          </button>
-        </Link>
-      </div>
+      <div className="flex flex-wrap items-center gap-4 px-6 py-4 max-w-4xl mx-auto">
+  {/* Search Bar */}
+  <input
+    type="text"
+    value={searchQuery}
+    onChange={(e) => setSearchQuery(e.target.value)}
+    placeholder="Search articles..."
+    className="flex-grow p-2 rounded-md bg-gray-900 border border-gray-300 text-white w-full sm:w-auto"
+  />
+  
+  {/* Plus Button */}
+  <Link href="/create" className="ml-auto">
+    <button className="p-2 rounded-full border border-gray-300 text-white hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200 flex items-center justify-center w-12 h-12">
+      <FiPlus />
+    </button>
+  </Link>
+</div>
+
 
       {/* Article Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 py-4 max-w-6xl mx-auto">
@@ -49,7 +53,10 @@ const BlogPage = () => {
             key={article.id}
             className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
           >
-            <h3 className="text-xl font-bold mb-2">{article.title}</h3>
+            {/* Title Container */}
+      <h3 className="text-xl font-bold mb-2 pr-10">{/* Added padding-right */}
+        {article.title}
+      </h3>
             <button
               onClick={() => openModal(article)}
               className="absolute top-2 right-2 bg-black text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"

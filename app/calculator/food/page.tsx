@@ -23,10 +23,10 @@ const FoodCalculator = () => {
   };
   
   const handleFormSubmit = (formData: FoodFormData) => {
-    const formattedPrompt = `Food: ${formData.foodName}\nQuantity: ${formData.quantity}\nDescription: ${formData.description}`;
+    const formattedPrompt = `${formData.foodName}, ${formData.quantity}, ${formData.description}. Provide the approximate calories, protein, carbohydrates, and fats for this serving. Include any assumptions made based on the description.`;
     setPrompt(formattedPrompt);
     setIsLoading(true);
-
+  
     fetch("/api/calculator/food", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -37,12 +37,13 @@ const FoodCalculator = () => {
         setResponse(data.response);
         setIsLoading(false);
       })
-      .catch(() => {
+      .catch((error) => {
+        console.error("Error fetching response:", error);
         setResponse("Error: Unable to fetch response.");
         setIsLoading(false);
       });
   };
-
+  
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />

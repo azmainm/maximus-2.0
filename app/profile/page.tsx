@@ -94,7 +94,7 @@ const Profile = () => {
               className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
               style={{ height: '120px' }}  // Fixed height to ensure buttons don't overlap
             >
-              <h3 className="text-xl font-bold mb-2">{article.title}</h3>
+              <h3 className="text-xl font-bold mb-2 pr-8">{article.title}</h3>
               <button
                 onClick={() => openModal(article)}
                 className="absolute top-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
@@ -120,7 +120,11 @@ const Profile = () => {
               className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
               style={{ height: '120', width:'280' }} 
             >
-              <h3 className="text-xl font-bold mb-2">{article.title}</h3>
+              
+              {/* Title Container */}
+      <h3 className="text-xl font-bold mb-2 pr-10">
+        {article.title}
+      </h3>
               <button
                 onClick={() => openModal(article)}
                 className="absolute top-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
