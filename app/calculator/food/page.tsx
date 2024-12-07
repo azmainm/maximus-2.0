@@ -13,37 +13,51 @@ interface FoodFormData {
   description: string;
 }
 
+interface NutritionalResponse {
+  calories: string;
+  protein: string;
+  carbs: string;
+  fats: string;
+}
+
 const FoodCalculator = () => {
   const [prompt, setPrompt] = useState(""); // Stores the formatted prompt
-  const [response, setResponse] = useState(""); // Stores the response
+  const [response, setResponse] = useState<NutritionalResponse | null>(null); // Stores the response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
   const isLoggedIn = false; // Replace with actual authentication logic
   const handleLogout = () => {
     console.log("Logout logic here");
   };
-  
-  const handleFormSubmit = (formData: FoodFormData) => {
-    const formattedPrompt = `${formData.foodName}, ${formData.quantity}, ${formData.description}. Provide the approximate calories, protein, carbohydrates, and fats for this serving. Include any assumptions made based on the description.`;
+
+  const handleFormSubmit = async (formData: FoodFormData) => {
+    const formattedPrompt = `${formData.foodName}, ${formData.quantity}, ${formData.description}`;
     setPrompt(formattedPrompt);
     setIsLoading(true);
   
-    fetch("/api/calculator/food", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt: formattedPrompt }),
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        setResponse(data.response);
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching response:", error);
-        setResponse("Error: Unable to fetch response.");
-        setIsLoading(false);
+    try {
+      const response = await fetch("/api/calculator/food", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: formattedPrompt }),
       });
+  
+      const result = await response.json();
+  
+      if (response.ok) {
+        setResponse(result.response);
+      } else {
+        setResponse(null);
+        console.error(result.error || "An error occurred while fetching the response.");
+      }
+    } catch (error) {
+      setResponse(null);
+      console.error("Error fetching response:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
@@ -54,7 +68,7 @@ const FoodCalculator = () => {
         {/* Render FoodResponse with placeholders until data is updated */}
         <FoodResponse
           prompt={prompt || "Waiting for input"} // Default placeholder
-          response={response || (isLoading ? "" : "No response yet")}
+          response={response}
           isLoading={isLoading}
         />
       </div>
