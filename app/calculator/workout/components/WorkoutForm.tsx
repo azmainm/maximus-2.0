@@ -9,7 +9,7 @@ interface WorkoutFormData {
   age: string;
   height: string;
   weight: string;
-  description: string;
+  duration:string;
 }
 
 const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormData) => void }) => {
@@ -20,13 +20,13 @@ const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormDat
   const [heightUnit, setHeightUnit] = useState<string>("cm");
   const [weight, setWeight] = useState<string>("");
   const [weightUnit, setWeightUnit] = useState<string>("kg");
-  const [description, setDescription] = useState<string>("");
+  const [duration, setDuration] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formattedHeight = `${height} ${heightUnit}`;
     const formattedWeight = `${weight} ${weightUnit}`;
-    onFormSubmit({ workoutType, sex, age, height: formattedHeight, weight: formattedWeight, description });
+    onFormSubmit({ workoutType, sex, age, height: formattedHeight, weight: formattedWeight, duration });
   };
 
   return (
@@ -123,13 +123,15 @@ const WorkoutForm = ({ onFormSubmit }: { onFormSubmit: (formData: WorkoutFormDat
         </div>
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2">Description</label>
-        <textarea
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
+        <label className="block text-sm font-semibold mb-2">Duration</label>
+        <input
+          type="number"
+          value={duration}
+          onChange={(e) => setDuration(e.target.value)}
           className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-          placeholder="Details about your workout goal or activity"
-        ></textarea>
+          placeholder="e.g., 25 mins"
+          required
+        />
       </div>
       <button
         type="submit"

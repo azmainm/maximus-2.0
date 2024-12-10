@@ -13,7 +13,7 @@ interface WorkoutFormData {
   age: string;
   height: string;
   weight: string;
-  description: string;
+  duration: string;
 }
 
 const WorkoutCalculator = () => {
@@ -26,7 +26,7 @@ const WorkoutCalculator = () => {
   };
 
   const handleFormSubmit = (formData: WorkoutFormData) => {
-    const formattedPrompt = `Workout Type: ${formData.workoutType}\nSex: ${formData.sex}\nAge: ${formData.age}\nHeight: ${formData.height}\nWeight: ${formData.weight}\nDescription: ${formData.description}`;
+    const formattedPrompt = `Workout Type: ${formData.workoutType}\nSex: ${formData.sex}\nAge: ${formData.age}\nHeight: ${formData.height}\nWeight: ${formData.weight}\nDescription: ${formData.duration}`;
     setPrompt(formattedPrompt);
     setIsLoading(true);
 

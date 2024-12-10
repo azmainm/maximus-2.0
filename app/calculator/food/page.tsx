@@ -66,7 +66,7 @@ const FoodCalculator = () => {
       <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
       <TabSwitcher />
       <div className="max-w-4xl mx-auto p-6">
-        <h1 className="text-xl text-gray-100 font-light mb-4 text-center">Food Macro Calculator</h1>
+        <h1 className="text-xl text-gray-100 font-light mb-4 text-center">Nutrients Calculator</h1>
         <FoodForm onFormSubmit={handleFormSubmit} />
         {/* Render FoodResponse with placeholders until data is updated */}
         <FoodResponse
