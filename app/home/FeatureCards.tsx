@@ -40,7 +40,7 @@ const FeatureCards = () => {
   const handleButtonClick = () => {
     setIsButtonClicked(true);
     setTimeout(() => {
-      router.push("/calculator/food");
+      router.push("/blog");
     }, 2000);
   };
 
