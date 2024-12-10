@@ -1,35 +1,54 @@
 // app/api/calculator/workout/route.ts
 import { NextResponse } from "next/server";
+import fs from "fs/promises";
+import path from "path";
 
-// MET dataset
-const workoutMetData = [
-  { workoutType: "Weight Training", met: 6.0 },
-  { workoutType: "Bodyweight Training", met: 5.0 },
-  { workoutType: "Rope Jumping", met: 12.3 },
-  { workoutType: "Running", met: 9.8 },
-];
-
-export async function POST(req: Request) {
+export async function POST(request: Request) {
   try {
-    const { workoutType, weight, duration } = await req.json();
+    const data = await request.json();
+    console.log("Received data:", data); // Debug log
 
-    // Find MET value for the selected workout type
-    const workout = workoutMetData.find((item) => item.workoutType === workoutType);
+    const { workoutType, sex, age, height, weight, duration } = data;
+
+    if (!workoutType || !sex || !age || !height || !weight || !duration) {
+      console.error("Validation error: Missing fields"); // Debug log
+      return NextResponse.json(
+        { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+
+    const filePath = path.join(process.cwd(), "app/data/workoutMet.json");
+    const fileData = await fs.readFile(filePath, "utf-8");
+    const workoutMetData = JSON.parse(fileData);
+
+    const workout = workoutMetData.find(
+      (item: { workoutType: string }) => item.workoutType === workoutType
+    );
+
     if (!workout) {
-      return NextResponse.json({ error: "Invalid workout type" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Workout type not found" },
+        { status: 404 }
+      );
     }
 
     const met = workout.met;
+    const weightInKg = weight.includes("lbs")
+  ? parseFloat(weight) * 0.453592
+  : parseFloat(weight.replace(" kg", "")); // Default to kg
 
-    // Convert duration from minutes to hours
-    const durationHours = parseFloat(duration) / 60;
 
-    // Calculate calories burned
-    const weightKg = parseFloat(weight);
-    const caloriesBurned = met * weightKg * durationHours;
+    const caloriesBurned =
+      ((met * 3.5 * weightInKg) / 200) * parseFloat(duration);
 
-    return NextResponse.json({ caloriesBurned });
-  } catch (error) {
-    return NextResponse.json({ error: "Invalid input" }, { status: 400 });
+    return NextResponse.json({ response: `${caloriesBurned.toFixed(2)} kcal` });
+  } catch (err) {
+    console.error("Error processing request:", err); // Log error for debugging
+    return NextResponse.json(
+      { error: "Internal Server Error" },
+      { status: 500 }
+    );
   }
 }
