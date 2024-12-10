@@ -1,81 +1,61 @@
 // app/api/calculator/food/route.ts
 import { NextResponse } from "next/server";
-import foodData from "../../../data/foodDataConverted.json";
+import transformedFoodData from "../../../data/transformedFoodData.json";
 
-interface NutrientData {
-  ENERC_KCAL?: number;
-  PROCNT?: number;
-  FAT?: number;
-  CHOCDF?: number;
-}
-
-interface FoodItem {
+interface Quantity {
   description: string;
-  nutrients: NutrientData;
+  weight_g: number;
 }
 
-export async function POST(req: Request) {
-  try {
-    const { prompt } = await req.json();
+interface Food {
+  name: string;
+  quantities: Quantity[];
+}
 
-    if (!prompt) {
-      return NextResponse.json(
-        { error: "Prompt is required" },
-        { status: 400 }
-      );
-    }
+const foodData: Food[] = transformedFoodData as Food[];
 
-    const [foodName, quantityStr, ...descriptionParts] = prompt.split(",").map((s: string) => s.trim());
-    const quantity = parseFloat(quantityStr.replace(/[^0-9.]/g, "")); // Extract numeric value from quantity
-    const description = descriptionParts.join(", ");
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const query = searchParams.get("query");
 
-    if (isNaN(quantity)) {
-      return NextResponse.json(
-        { error: "Quantity must be a valid number" },
-        { status: 400 }
-      );
-    }
-
-    // Search for matching food items in the JSON
-    const matches = (foodData as FoodItem[]).filter((item) =>
-      item.description.toLowerCase().includes(foodName.toLowerCase())
-    );
-    console.log(foodData);
-
-
-    if (matches.length === 0) {
-      return NextResponse.json(
-        { error: "Food not found in the database" },
-        { status: 404 }
-      );
-    }
-
-    // Calculate total nutrition based on matches
-    const totalNutrients: NutrientData = { ENERC_KCAL: 0, PROCNT: 0, FAT: 0, CHOCDF: 0 };
-
-    matches.forEach((match) => {
-      const factor = quantity / 100; // Assuming the nutrients are per 100g
-      totalNutrients.ENERC_KCAL! += (match.nutrients.ENERC_KCAL || 0) * factor;
-      totalNutrients.PROCNT! += (match.nutrients.PROCNT || 0) * factor;
-      totalNutrients.FAT! += (match.nutrients.FAT || 0) * factor;
-      totalNutrients.CHOCDF! += (match.nutrients.CHOCDF || 0) * factor;
-    });
-
-    // Include the description in the response for assumptions
-    return NextResponse.json({
-      response: {
-        calories: totalNutrients.ENERC_KCAL!.toFixed(2),
-        protein: totalNutrients.PROCNT!.toFixed(2),
-        carbs: totalNutrients.CHOCDF!.toFixed(2),
-        fats: totalNutrients.FAT!.toFixed(2),
-        assumptions: description || "No additional details provided.",
-      },
-    });
-  } catch (error) {
-    console.error("Error processing request:", error);
+  if (!query) {
     return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
+      { error: "Query parameter is required" },
+      { status: 400 }
     );
   }
+
+  const matchingFoods = foodData.filter((food) =>
+    food.name.toLowerCase().includes(query.toLowerCase())
+  );
+
+  return NextResponse.json({ foods: matchingFoods });
+}
+
+export async function POST(request: Request) {
+  const body = await request.json();
+  const { foodName, quantity, description } = body;
+
+  if (!foodName || !quantity || !description) {
+    return NextResponse.json(
+      { error: "Missing required fields" },
+      { status: 400 }
+    );
+  }
+
+  const food = foodData.find((item) => item.name === foodName);
+
+  if (!food) {
+    return NextResponse.json({ error: "Food not found" }, { status: 404 });
+  }
+
+  // Mock response (in practice, calculate based on quantity)
+  const response = {
+    calories: (Number(quantity) * 2).toFixed(2), // Example multiplier
+    protein: (Number(quantity) * 0.1).toFixed(2),
+    carbs: (Number(quantity) * 0.3).toFixed(2),
+    fats: (Number(quantity) * 0.05).toFixed(2),
+  };
+
+  return NextResponse.json(response);
 }

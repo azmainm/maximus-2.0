@@ -21,7 +21,7 @@ const Hero = () => {
       <h2 className="font-poppins text-4xl font-medium mb-4 text-center">
             Shape Your
       </h2>
-      <div className="text-center font-bold mb-8">
+      <div className="text-center font-semibold mb-8">
         <motion.h1
           className="font-poppins text-7xl inline-block"
           initial={{ opacity: 0, y: 50 }}

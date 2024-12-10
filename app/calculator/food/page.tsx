@@ -30,21 +30,23 @@ const FoodCalculator = () => {
   };
 
   const handleFormSubmit = async (formData: FoodFormData) => {
-    const formattedPrompt = `${formData.foodName}, ${formData.quantity}, ${formData.description}`;
-    setPrompt(formattedPrompt);
+    const { foodName, quantity, description } = formData; // Get these values directly
+  
+    setPrompt(`${foodName}, ${quantity}, ${description}`);
     setIsLoading(true);
   
     try {
+      // Send the data directly without wrapping it in a "prompt" object
       const response = await fetch("/api/calculator/food", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ prompt: formattedPrompt }),
+        body: JSON.stringify({ foodName, quantity, description }), // Correct the payload
       });
   
       const result = await response.json();
   
       if (response.ok) {
-        setResponse(result.response);
+        setResponse(result); // Assuming the entire response is the nutritional data
       } else {
         setResponse(null);
         console.error(result.error || "An error occurred while fetching the response.");
@@ -56,6 +58,7 @@ const FoodCalculator = () => {
       setIsLoading(false);
     }
   };
+  
   
 
   return (
