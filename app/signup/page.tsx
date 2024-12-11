@@ -3,6 +3,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import { auth, db } from "../../firebaseConfig"; 
+import { FirebaseError } from "firebase/app";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -13,16 +20,51 @@ const SignUp = () => {
   const [heightUnit, setHeightUnit] = useState("cm");
   const [weight, setWeight] = useState("");
   const [weightUnit, setWeightUnit] = useState("kg");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
 
-  const handleSignUp = () => {
-    // Handle sign up logic here
+  const handleSignUp = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Update the user profile with display name
+      await updateProfile(user, { displayName: name });
+
+      // Save user data to Firestore
+      const userDoc = {
+        name,
+        email,
+        age,
+        sex,
+        height: `${height} ${heightUnit}`,
+        weight: `${weight} ${weightUnit}`,
+        uid: user.uid,
+        createdAt: new Date().toISOString(),
+      };
+      await setDoc(doc(db, "users", user.uid), userDoc);
+
+      toast.success("Sign-up successful! Redirecting to login...");
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000); // Wait for the toast to display before routing
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Firebase error during sign-up:", error.message);
+        toast.error(`Error: ${error.message}`);
+      } else {
+        console.error("Unknown error during sign-up:", error);
+        toast.error("An unknown error occurred.");
+      }
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="w-full max-w-sm p-6 bg-gray-900 border border-cyan-300 rounded-lg shadow-lg text-white">
         <h2 className="text-2xl font-medium mb-4 text-center">Sign Up</h2>
-        
+
+        {/* Name */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Name</label>
           <input
@@ -35,6 +77,7 @@ const SignUp = () => {
           />
         </div>
 
+        {/* Email */}
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Email</label>
           <input
@@ -132,6 +175,17 @@ const SignUp = () => {
             </select>
           </div>
         </div>
+        <div className="mb-4">
+  <label className="block text-sm font-medium mb-2">Password</label>
+  <input
+    type="password"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+    className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+    placeholder="Enter your password"
+    required
+  />
+</div>
 
         <button
           onClick={handleSignUp}

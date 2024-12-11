@@ -24,10 +24,11 @@ const FoodCalculator = () => {
   const [prompt, setPrompt] = useState(""); // Stores the formatted prompt
   const [response, setResponse] = useState<NutritionalResponse | null>(null); // Stores the response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const isLoggedIn = false; // Replace with actual authentication logic
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   const handleLogout = () => {
-    console.log("Logout logic here");
-  };
+    setIsLoggedIn(false); 
+    window.location.href = "/"; }
 
   const handleFormSubmit = async (formData: FoodFormData) => {
     const { foodName, quantity, description } = formData; // Get these values directly

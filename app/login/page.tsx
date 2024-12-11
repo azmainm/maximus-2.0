@@ -4,20 +4,54 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { doc, getDoc } from "firebase/firestore";
+import { auth, db } from "../../firebaseConfig";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter(); // Initialize the router
 
-  const handleLogin = () => {
-    // Handle login logic here
+  const handleLogin = async () => {
+    try {
+      // Authenticate user with Firebase
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      const user = userCredential.user;
+
+      // Check if the user exists in Firestore
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        toast.error("User not found in database!");
+        return;
+      }
+
+      // Log the user information (optional)
+      console.log("User logged in:", user);
+
+      toast.success("Login successful!");
+      router.push("/blog"); // Redirect the user to the blog page
+    } catch (error) {
+      // Handle errors and display toast messages
+      if (error instanceof Error) {
+        console.error("Error during login:", error.message);
+        toast.error(`Error: ${error.message}`);
+      } else {
+        console.error("Unknown error during login:", error);
+        toast.error("An unknown error occurred.");
+      }
+    }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
+      <ToastContainer />
       <div className="w-full max-w-sm p-6 bg-gray-900 border border-cyan-300 rounded-lg shadow-lg text-white">
         <h2 className="text-2xl font-medium mb-4 text-center">Login</h2>
-        
+
         <div className="mb-4">
           <label className="block text-sm font-medium mb-2">Email</label>
           <input

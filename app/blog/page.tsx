@@ -12,6 +12,11 @@ const BlogPage = () => {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  const handleLogout = () => {
+    setIsLoggedIn(false); 
+    window.location.href = "/"; }
 
   const openModal = (article: Article) => {
     setSelectedArticle(article);
@@ -24,7 +29,7 @@ const BlogPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-poppins">
-      <Navbar isLoggedIn={true} handleLogout={() => console.log("Logout")} />
+      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
 
       {/* Search and Plus Button */}
       <div className="flex flex-wrap items-center gap-4 px-6 py-4 max-w-4xl mx-auto">

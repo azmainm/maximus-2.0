@@ -4,6 +4,9 @@
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { auth } from "../../firebaseConfig";
 
 interface NavbarProps {
   isLoggedIn: boolean;
@@ -12,9 +15,20 @@ interface NavbarProps {
 
 const Navbar = ({ isLoggedIn, handleLogout }: NavbarProps) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth); // Sign out the user using Firebase
+      handleLogout(); // Update parent state to reflect logged-out status
+      router.push("/"); // Redirect to home page
+    } catch (error) {
+      console.error("Error logging out:", error);
+    }
   };
 
   const navItems = isLoggedIn
@@ -23,7 +37,7 @@ const Navbar = ({ isLoggedIn, handleLogout }: NavbarProps) => {
         { name: "Calculator", href: "/calculator/food" },
         { name: "Blog", href: "/blog" },
         { name: "Profile", href: "/profile" },
-        { name: "Logout", href: "#", action: handleLogout },
+        { name: "Logout", action: handleSignOut },
       ]
     : [
         { name: "Home", href: "/" },
