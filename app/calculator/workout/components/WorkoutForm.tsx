@@ -91,7 +91,7 @@ const WorkoutForm = () => {
 
   return (
     <div>
-    <form onSubmit={handleSubmit} className="p-4 bg-gray-900 text-white rounded">
+    <form onSubmit={handleSubmit} className="p-4 bg-gray-900 text-white border border-gray-300 rounded-md shadow-lg shadow-gray-800 text-white">
       <div className="mb-4">
         <label className="block mb-2">Search Workout Type</label>
         <input
