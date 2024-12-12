@@ -2,8 +2,19 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Default deny all access to ensure new collections remain protected.
     match /{document=**} {
       allow read, write: if false;
+    }
+    // Rules for the "posts" collection.
+    match /posts/{possts} {
+      allow write: if request.auth != null; // Authenticated users can write.
+      allow read: if true;                 // Anyone can read.
+    }
+    // Rules for the "users" collection.
+    match /users/{userId} {
+      allow write: if request.auth != null && request.auth.uid == userId; // Users can write to their own profiles.
+      allow read: if request.auth != null;                               // Authenticated users can read user data.
     }
   }
 }

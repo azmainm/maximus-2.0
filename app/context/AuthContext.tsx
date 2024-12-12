@@ -1,12 +1,13 @@
 //app/context/AuthContext.tsx
-"use client"
+"use client";
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../../firebaseConfig"; // Adjust import based on your config path
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../../firebaseConfig"; // Adjust import path
 
 interface AuthContextType {
   isLoggedIn: boolean;
+  currentUser: User | null; // Firebase User object or null if not logged in
   login: () => void;
   logout: () => void;
 }
@@ -15,11 +16,13 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState<User | null>(null);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(!!user); // Set to true if user exists, false otherwise
-      console.log(user ? "User is logged in" : "No user logged in");
+      setIsLoggedIn(!!user);
+      setCurrentUser(user || null); // Set user object or null
+      console.log(user ? `User logged in: ${user.displayName}` : "No user logged in");
     });
     return () => unsubscribe(); // Cleanup listener on unmount
   }, []);
@@ -30,10 +33,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const logout = () => {
     setIsLoggedIn(false);
+    setCurrentUser(null);
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, currentUser, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

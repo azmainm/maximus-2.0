@@ -1,13 +1,16 @@
 // app/create/components/CreatePost.tsx
-// app/create/components/CreatePost.tsx
 "use client";
-import React, { useState } from "react";
+import React, { useState} from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 import { db } from "../../../firebaseConfig";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../../context/AuthContext";
 
 const CreatePost = () => {
+  const { currentUser } = useAuth();
   const [title, setTitle] = useState("");
   const [tldr, setTldr] = useState("");
   const [content, setContent] = useState("");
@@ -16,29 +19,40 @@ const CreatePost = () => {
 
   const router = useRouter();
 
+  const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    const updatedContent = value.replace(/\r?\n/g, "\n");
+    setContent(updatedContent);
+  };
+
   const handlePost = async () => {
+    if (!currentUser) {
+      toast.error("You need to be logged in to post an article.");
+      return;
+    }
+
     setIsPosting(true);
 
     try {
-      const userId = "USER_ID"; // Replace with actual user ID from authentication
-      const userName = "USER_NAME"; // Replace with actual user name from authentication
-
+      const { uid, displayName } = currentUser;
       const articleData = {
         title,
         tldr,
         content,
-        userId,
-        userName,
+        userId: uid,
+        userName: displayName || "Anonymous",
         createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       };
 
       // Add article to Firestore
-      await addDoc(collection(db, "articles"), articleData);
+      await addDoc(collection(db, "posts"), articleData);
 
       setShowSuccessModal(true);
+      //toast.success("Article posted successfully!");
     } catch (error) {
       console.error("Error posting article:", error);
-      alert("Failed to post article. Please try again.");
+      toast.error("Failed to post the article. Please try again.");
     } finally {
       setIsPosting(false);
     }
@@ -74,7 +88,7 @@ const CreatePost = () => {
             placeholder="Content"
             className="mb-6 p-3 w-full h-40 rounded-md text-gray-100 bg-gray-900 border border-gray-600 mt-2"
             value={content}
-            onChange={(e) => setContent(e.target.value)}
+            onChange={handleContentChange}
           />
           <motion.button
             onClick={handlePost}
@@ -109,5 +123,4 @@ const CreatePost = () => {
     </div>
   );
 };
-
 export default CreatePost;
