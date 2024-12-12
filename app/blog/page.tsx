@@ -1,22 +1,43 @@
 // app/blog/page.tsx
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebaseConfig";
 import Link from "next/link";
 import { FiArrowUpRight, FiPlus } from "react-icons/fi";
-import { articles, Article } from "../data/articles";
+//import { articles, Article } from "../data/articles";
 import Modal from "./components/Modal";
 import Navbar from "../ui/Navbar";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "../context/AuthContext";
 
+interface Article {
+  id: string;
+  title: string;
+  tldr: string;
+}
 
 const BlogPage = () => {
+  const [articles, setArticles] = useState<Article[]>([]);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
   const { isLoggedIn } = useAuth();
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      const querySnapshot = await getDocs(collection(db, "posts"));
+      const fetchedArticles = querySnapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      })) as Article[];
+      setArticles(fetchedArticles);
+    };
+    
+    fetchArticles();
+  }, []);
 
   const openModal = (article: Article) => {
     setSelectedArticle(article);
@@ -74,7 +95,7 @@ const BlogPage = () => {
       </h3>
             <button
               onClick={() => openModal(article)}
-              className="absolute top-2 right-2 bg-black text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
+              className="absolute top-2 right-2 bg-gray-900 text-white border border-gray-300 rounded-full p-2 hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200"
             >
               <FiArrowUpRight />
             </button>
@@ -88,7 +109,7 @@ const BlogPage = () => {
           title={selectedArticle.title}
           tldr={selectedArticle.tldr}
           onClose={() => setShowModal(false)}
-          articleId={selectedArticle.id}
+          articleId={Number(selectedArticle.id)} 
         />
       )}
     </div>
