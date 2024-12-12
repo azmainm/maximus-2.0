@@ -109,7 +109,7 @@ const BlogPage = () => {
           title={selectedArticle.title}
           tldr={selectedArticle.tldr}
           onClose={() => setShowModal(false)}
-          articleId={Number(selectedArticle.id)} 
+          articleId={(selectedArticle.id)} 
         />
       )}
     </div>

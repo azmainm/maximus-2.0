@@ -1,25 +1,46 @@
+// article/[articleId]/page.tsx
 "use client";
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { articles, Article } from "../../data/articles";
+//import { articles, Article } from "../../data/articles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../../ui/Navbar";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../../firebaseConfig";
+
+interface Article {
+  title: string;
+  tldr: string;
+  userName: string;
+  content: string;
+}
 
 const ArticlePage = () => {
   const { articleId } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  // const handleLogout = () => {
-  //   setIsLoggedIn(false); 
-  //   window.location.href = "/"; }
+  //const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchedArticle = articles.find((a) => a.id.toString() === articleId);
-    setArticle(fetchedArticle || null);
+    const fetchArticle = async () => {
+      if (!articleId || Array.isArray(articleId)) return; // Ensure articleId is a string
+      const id = articleId.split("-")[0];
+      try {
+        const docRef = doc(db, "posts", id);
+        const docSnap = await getDoc(docRef);
+        if (docSnap.exists()) {
+          setArticle(docSnap.data() as Article);
+        } else {
+          setArticle(null);
+        }
+      } catch (error) {
+        console.error("Error fetching article:", error);
+      }
+    };
+
+    fetchArticle();
   }, [articleId]);
 
   const toggleFavorite = () => {
@@ -47,7 +68,8 @@ const ArticlePage = () => {
             />
           </button>
         </div>
-        <p className="text-gray-400 mb-4">By {article.author}</p>
+        <p className="text-gray-400 mb-4">By {article.userName}</p>
+        <p className="text-gray-500 mb-4">{article.tldr}</p>
         <p className="text-md whitespace-pre-wrap">{article.content}</p>
       </div>
     </div>

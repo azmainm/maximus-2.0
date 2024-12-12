@@ -37,16 +37,16 @@ import { useAuth } from "../context/AuthContext";
     const navItems = isLoggedIn
       ? [
           { name: "Home", href: "/" },
-          { name: "Calculator", href: "/calculator/food" },
           { name: "Blog", href: "/blog" },
+          { name: "Calculator", href: "/calculator/food" },
           { name: "Profile", href: "/profile" },
           { name: "Logout", action: handleSignOut },
         ]
         
       : [
           { name: "Home", href: "/" },
-          { name: "Calculator", href: "/calculator/food" },
           { name: "Blog", href: "/blog" },
+          { name: "Calculator", href: "/calculator/food" },
           { name: "Login", href: "/login" },
         ];
         console.log(isLoggedIn+" from navbar")

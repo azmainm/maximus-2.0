@@ -7,14 +7,15 @@ interface ModalProps {
   title: string;
   tldr: string;
   onClose: () => void;
-  articleId: number;
+  articleId: string;
 }
 
 const Modal = ({ title, tldr, onClose, articleId }: ModalProps) => {
   const router = useRouter();
 
   const handleReadArticle = () => {
-    router.push(`/article/${articleId}`);
+    const slug = title.toLowerCase().replace(/\s+/g, "-").replace(/[^a-z0-9-]/g, ""); // Generate slug
+    router.push(`/article/${articleId}-${slug}`);
   };
 
   return (

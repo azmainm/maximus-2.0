@@ -12,18 +12,18 @@ const FeatureCards = () => {
 
   const features = [
     {
-      title: "Food Calculator",
+      title: "Nutrition Calculator",
       description: "Track your meals and macros.",
       icon: <FaAppleAlt className="text-gray-300 text-5xl mb-4" />,
     },
     {
       title: "Workout Calculator",
-      description: "Plan and track workouts.",
+      description: "Find out how effective your workout was.",
       icon: <FaDumbbell className="text-gray-300 text-5xl mb-4" />,
     },
     {
       title: "Blog",
-      description: "Read articles on health and fitness.",
+      description: "Read articles on health, fitness and well-being.",
       icon: <FaBook className="text-gray-300 text-5xl mb-4" />,
     },
   ];
@@ -51,13 +51,12 @@ const FeatureCards = () => {
   {features.map((feature, index) => (
     <div
     key={index}
-    className="bg-gradient-to-r from-black to-black via-gray-900 px-3 py-3 sm:p-6 rounded-lg border border-black shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
+    className="bg-black px-3 py-3 sm:p-6 rounded-lg border border-gray-800 shadow-lg hover:scale-110 transition-transform duration-300 w-full sm:w-[250px] md:w-[300px] flex flex-col items-center"
   >
     <div className="mb-4">{feature.icon}</div>
     <h3 className="text-2xl text-white font-semibold mb-4">{feature.title}</h3>
     <p className="text-white">{feature.description}</p>
   </div>
-  
   ))}
 </div>
 
