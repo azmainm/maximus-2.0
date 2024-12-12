@@ -7,17 +7,23 @@ import { FiArrowUpRight, FiPlus } from "react-icons/fi";
 import { articles, Article } from "../data/articles";
 import Modal from "./components/Modal";
 import Navbar from "../ui/Navbar";
+// import { useAuth } from "../context/AuthContext";
 
 const BlogPage = () => {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const { isLoggedIn, logout } = useAuth();
 
-  const handleLogout = () => {
-    setIsLoggedIn(false); 
-    window.location.href = "/"; }
+  // const handleLogout = () => {
+  //   setIsLoggedIn(false); 
+  //   window.location.href = "/"; }
 
+  // const handleLogout = () => {
+  //   logout();
+  //   window.location.href = "/";
+  // };
   const openModal = (article: Article) => {
     setSelectedArticle(article);
     setShowModal(true);
@@ -29,7 +35,7 @@ const BlogPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-poppins">
-      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      <Navbar />
 
       {/* Search and Plus Button */}
       <div className="flex flex-wrap items-center gap-4 px-6 py-4 max-w-4xl mx-auto">

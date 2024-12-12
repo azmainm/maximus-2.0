@@ -1,8 +1,11 @@
+//layout.tsx
+
 import type { Metadata } from "next";
 //import localFont from "next/font/local";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { AuthProvider } from "./context/AuthContext";
 
 export const metadata: Metadata = {
   title: "Maximus",
@@ -24,8 +27,10 @@ export default function RootLayout({
       </head>
       <body
       >
-        <ToastContainer />
-        {children}
+        <AuthProvider>
+          <ToastContainer />
+          {children}
+        </AuthProvider>
       </body>
     </html>
   );

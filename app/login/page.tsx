@@ -17,6 +17,10 @@ const Login = () => {
   const router = useRouter(); // Initialize the router
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      toast.error("All fields are mandatory. Please fill out your email and password.");
+      return;
+    }
     try {
       // Authenticate user with Firebase
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -25,7 +29,7 @@ const Login = () => {
       // Check if the user exists in Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (!userDoc.exists()) {
-        toast.error("User not found in database!");
+        toast.error("User not registered!");
         return;
       }
 
@@ -38,7 +42,7 @@ const Login = () => {
       // Handle errors and display toast messages
       if (error instanceof Error) {
         console.error("Error during login:", error.message);
-        toast.error(`Error: ${error.message}`);
+        toast.error(`Incorrect credentials. Please try again.`);
       } else {
         console.error("Unknown error during login:", error);
         toast.error("An unknown error occurred.");

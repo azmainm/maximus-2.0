@@ -24,6 +24,18 @@ const SignUp = () => {
   const router = useRouter();
 
   const handleSignUp = async () => {
+    if (
+      !name ||
+      !email ||
+      !age ||
+      !sex ||
+      !height ||
+      !weight ||
+      !password
+    ) {
+      toast.error("All fields are mandatory. Please fill out all the details.");
+      return;
+    }
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
@@ -44,17 +56,17 @@ const SignUp = () => {
       };
       await setDoc(doc(db, "users", user.uid), userDoc);
 
-      toast.success("Sign-up successful! Redirecting to login...");
+      toast.success("Sign-up successful! Redirecting to login.");
       setTimeout(() => {
         router.push("/login");
       }, 2000); // Wait for the toast to display before routing
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Firebase error during sign-up:", error.message);
-        toast.error(`Error: ${error.message}`);
+        toast.error(`An error occured. Plase try again.`);
       } else {
         console.error("Unknown error during sign-up:", error);
-        toast.error("An unknown error occurred.");
+        toast.error("An unknown error occurred. Plase try again.");
       }
     }
   };
