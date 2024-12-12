@@ -7,23 +7,17 @@ import { FiArrowUpRight, FiPlus } from "react-icons/fi";
 import { articles, Article } from "../data/articles";
 import Modal from "./components/Modal";
 import Navbar from "../ui/Navbar";
-// import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "../context/AuthContext";
+
 
 const BlogPage = () => {
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [showModal, setShowModal] = useState<boolean>(false);
-  //const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const { isLoggedIn, logout } = useAuth();
+  const { isLoggedIn } = useAuth();
 
-  // const handleLogout = () => {
-  //   setIsLoggedIn(false); 
-  //   window.location.href = "/"; }
-
-  // const handleLogout = () => {
-  //   logout();
-  //   window.location.href = "/";
-  // };
   const openModal = (article: Article) => {
     setSelectedArticle(article);
     setShowModal(true);
@@ -32,6 +26,16 @@ const BlogPage = () => {
   const filteredArticles = articles.filter((article) =>
     article.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+
+  const handleCreateClick = (e: React.MouseEvent) => {
+    if (!isLoggedIn) {
+      e.preventDefault(); // Prevent navigation
+      toast.error("You need to be logged in to create a post!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-poppins">
@@ -50,7 +54,7 @@ const BlogPage = () => {
   
   {/* Plus Button */}
   <Link href="/create" className="ml-auto">
-    <button className="p-2 rounded-full border border-gray-300 text-white hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200 flex items-center justify-center w-12 h-12">
+    <button onClick={handleCreateClick} className="p-2 rounded-full border border-gray-300 text-white hover:bg-cyan-300 hover:text-black transition ease-in-out duration-200 flex items-center justify-center w-12 h-12">
       <FiPlus />
     </button>
   </Link>

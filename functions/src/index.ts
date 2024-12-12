@@ -10,6 +10,13 @@
 import {onRequest} from "firebase-functions/v2/https";
 import * as logger from "firebase-functions/logger";
 
+
+export const helloWorld = onRequest((request, response) => {
+  logger.info("", { structuredData: true });
+  response.send("");
+});
+
+
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
@@ -17,3 +24,4 @@ import * as logger from "firebase-functions/logger";
 //   logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
 // });
+

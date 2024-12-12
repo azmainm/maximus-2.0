@@ -33,7 +33,10 @@ const SignUp = () => {
       !weight ||
       !password
     ) {
-      toast.error("All fields are mandatory. Please fill out all the details.");
+      toast.error("All fields are mandatory. Please fill out all the details.",{
+        position: "bottom-right",
+        autoClose: 3000,
+      });
       return;
     }
     try {
@@ -56,17 +59,26 @@ const SignUp = () => {
       };
       await setDoc(doc(db, "users", user.uid), userDoc);
 
-      toast.success("Sign-up successful! Redirecting to login.");
+      toast.success("Sign-up successful! Redirecting to login.",{
+        position: "bottom-right",
+        autoClose: 3000,
+      });
       setTimeout(() => {
         router.push("/login");
       }, 2000); // Wait for the toast to display before routing
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
         console.error("Firebase error during sign-up:", error.message);
-        toast.error(`An error occured. Plase try again.`);
+        toast.error(`An error occured. Plase try again.`,{
+          position: "bottom-right",
+          autoClose: 3000,
+        });
       } else {
         console.error("Unknown error during sign-up:", error);
-        toast.error("An unknown error occurred. Plase try again.");
+        toast.error("An unknown error occurred. Plase try again.",{
+          position: "bottom-right",
+          autoClose: 3000,
+        });
       }
     }
   };

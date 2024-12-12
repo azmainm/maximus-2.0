@@ -4,7 +4,6 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
-import Navbar from "../../ui/Navbar";
 import { db } from "../../../firebaseConfig";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
@@ -47,17 +46,16 @@ const CreatePost = () => {
 
   return (
     <div>
-      <Navbar />
       <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white font-poppins">
-        <div className="max-w-lg p-6 bg-gray-900 rounded-lg shadow-lg shadow-cyan-300 w-full md:w-auto">
-          <h1 className="text-4xl font-bold mt-8 mb-6 text-cyan-300 text-center">
+        <div className="max-w-lg p-6 bg-gray-900 rounded-lg shadow-lg shadow-cyan-600 w-full md:w-auto">
+          <h1 className="text-4xl font-bold mt-8 mb-6 text-cyan-100 text-center">
             Post your Article
           </h1>
           <label className="text-md mb-2">What do you call the article?</label>
           <input
             type="text"
             placeholder="Title"
-            className="mb-4 p-3 w-full rounded-sm text-black"
+            className="mb-4 p-3 w-full rounded-md text-gray-100 bg-gray-900 border border-gray-600 mt-2"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
@@ -67,14 +65,14 @@ const CreatePost = () => {
           <input
             type="text"
             placeholder="TLDR"
-            className="mb-4 p-3 w-full rounded-sm text-black"
+            className="mb-4 p-3 w-full rounded-md text-gray-100 bg-gray-900 border border-gray-600 mt-2"
             value={tldr}
             onChange={(e) => setTldr(e.target.value)}
           />
           <label className="text-md mb-2">Now, write your heart out</label>
           <textarea
             placeholder="Content"
-            className="mb-6 p-3 w-full h-40 rounded-sm text-black"
+            className="mb-6 p-3 w-full h-40 rounded-md text-gray-100 bg-gray-900 border border-gray-600 mt-2"
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />

@@ -18,7 +18,10 @@ const Login = () => {
 
   const handleLogin = async () => {
     if (!email || !password) {
-      toast.error("All fields are mandatory. Please fill out your email and password.");
+      toast.error("All fields are mandatory. Please fill out your email and password.",{
+        position: "bottom-right",
+        autoClose: 3000,
+      });
       return;
     }
     try {
@@ -29,23 +32,35 @@ const Login = () => {
       // Check if the user exists in Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (!userDoc.exists()) {
-        toast.error("User not registered!");
+        toast.error("User not registered!", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
         return;
       }
 
       // Log the user information (optional)
       console.log("User logged in:", user);
 
-      toast.success("Login successful!");
+      toast.success("Login successful!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
       router.push("/blog"); // Redirect the user to the blog page
     } catch (error) {
       // Handle errors and display toast messages
       if (error instanceof Error) {
         console.error("Error during login:", error.message);
-        toast.error(`Incorrect credentials. Please try again.`);
+        toast.error(`Incorrect credentials. Please try again.`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
       } else {
         console.error("Unknown error during login:", error);
-        toast.error("An unknown error occurred.");
+        toast.error("An unknown error occurred.", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
       }
     }
   };
