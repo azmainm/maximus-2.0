@@ -1,7 +1,6 @@
 // app/create/components/CreatePost.tsx
 // app/create/components/CreatePost.tsx
 "use client";
-
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
@@ -48,7 +47,7 @@ const CreatePost = () => {
 
   return (
     <div>
-      <Navbar isLoggedIn={true} handleLogout={() => console.log("Logout")} />
+      <Navbar />
       <div className="flex flex-col justify-center items-center min-h-screen bg-gray-900 text-white font-poppins">
         <div className="max-w-lg p-6 bg-gray-900 rounded-lg shadow-lg shadow-cyan-300 w-full md:w-auto">
           <h1 className="text-4xl font-bold mt-8 mb-6 text-cyan-300 text-center">

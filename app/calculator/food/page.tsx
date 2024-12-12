@@ -24,11 +24,6 @@ const FoodCalculator = () => {
   const [prompt, setPrompt] = useState(""); // Stores the formatted prompt
   const [response, setResponse] = useState<NutritionalResponse | null>(null); // Stores the response
   const [isLoading, setIsLoading] = useState(false); // Tracks loading state
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false); 
-    window.location.href = "/"; }
 
   const handleFormSubmit = async (formData: FoodFormData) => {
     const { foodName, quantity, description } = formData; // Get these values directly
@@ -64,7 +59,7 @@ const FoodCalculator = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
-      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      <Navbar />
       <TabSwitcher />
       <div className="max-w-4xl mx-auto p-6">
         <h1 className="text-xl text-gray-100 font-light mb-4 text-center">Nutrients Calculator</h1>

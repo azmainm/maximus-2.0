@@ -12,11 +12,6 @@ const Profile = () => {
   const [showDeletionModal, setShowDeletionModal] = useState(false);
   const [showConfirmationModal, setShowConfirmationModal] = useState(false);
   const [articleToDelete, setArticleToDelete] = useState<number | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogout = () => {
-    setIsLoggedIn(false); 
-    window.location.href = "/"; }
 
   const userInfo = {
     full_name: 'John Doe',
@@ -56,7 +51,7 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-poppins">
-      <Navbar isLoggedIn={isLoggedIn} handleLogout={handleLogout} />
+      <Navbar />
 
       <div className="min-h-screen flex flex-col items-center bg-gray-900 text-white font-poppins p-4">
         {/* Top Card with User Information */}
