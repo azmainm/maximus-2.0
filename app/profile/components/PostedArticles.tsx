@@ -9,15 +9,17 @@ import { useAuth } from "../../context/AuthContext";
 import Modal from "../../blog/components/Modal";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { writeBatch } from "firebase/firestore";
+
 
 interface Article {
   id: string;
   title: string;
-  tldr: string; // Optional, handle cases where "tldr" might not be present in Firestore
+  tldr: string; 
 }
 
 const PostedArticles = () => {
-  const { userId } = useAuth(); // Get logged-in user's ID from AuthContext
+  const { userId } = useAuth(); 
   const [articles, setArticles] = useState<Article[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [selectedArticle, setSelectedArticle] = useState<Article | null>(null);
@@ -62,10 +64,36 @@ const PostedArticles = () => {
 
   const handleDeleteArticle = async () => {
     if (!selectedArticle) return;
-
+  
     try {
-      await deleteDoc(doc(db, "posts", selectedArticle.id));
-      setArticles((prev) => prev.filter((article) => article.id !== selectedArticle.id)); // Update state
+      const postId = selectedArticle.id;
+  
+      // Delete the article document
+      await deleteDoc(doc(db, "posts", postId));
+  
+      // Find all users who have this article in their favorite_articles array
+      const usersQuery = query(
+        collection(db, "users"),
+        where("favorite_articles", "array-contains", postId)
+      );
+      const usersSnapshot = await getDocs(usersQuery);
+  
+      // Create a batch to update users
+      const batch = writeBatch(db);
+      usersSnapshot.forEach((userDoc) => {
+        const userRef = doc(db, "users", userDoc.id);
+        batch.update(userRef, {
+          favorite_articles: userDoc
+            .data()
+            .favorite_articles.filter((id: string) => id !== postId),
+        });
+      });
+  
+      // Commit the batch operation
+      await batch.commit();
+  
+      // Update local state
+      setArticles((prev) => prev.filter((article) => article.id !== postId)); // Remove the article locally
       toast.success("Your post has been deleted!");
     } catch (error) {
       console.error("Error deleting article:", error);
@@ -74,10 +102,11 @@ const PostedArticles = () => {
       setShowDeleteModal(false);
     }
   };
+  
 
   return (
     <div>
-      <h1 className="font-poppins font-semibold text-lg mb-4">Posted Articles</h1>
+      <h1 className="font-poppins font-semibold text-lg mb-4 text-center">Posted Articles</h1>
       {loading ? (
         <p>Loading...</p>
       ) : articles.length === 0 ? (
@@ -88,7 +117,7 @@ const PostedArticles = () => {
             <div
               key={article.id}
               className="relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
-              style={{ height: "120px" }}
+              style={{ width: "300px", height: "120px" }}
             >
               <h3 className="text-xl font-bold mb-2 pr-8">{article.title}</h3>
               <button
