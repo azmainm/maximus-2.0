@@ -68,7 +68,7 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <ToastContainer />
-      <div className="w-full max-w-sm p-6 bg-gray-900 border border-cyan-300 rounded-lg shadow-lg text-white">
+      <div className="w-full max-w-sm p-6 bg-gray-900 rounded-md border border-gray-300 shadow-lg text-white">
         <h2 className="text-2xl font-medium mb-4 text-center">Login</h2>
 
         <div className="mb-4">
