@@ -2,14 +2,16 @@
 "use client";
 
 import { useState } from "react";
+import Navbar from "../ui/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import { doc, setDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig"; 
 import { FirebaseError } from "firebase/app";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FcGoogle } from "react-icons/fc";
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -40,7 +42,11 @@ const SignUp = () => {
       return;
     }
     try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
       const user = userCredential.user;
 
       // Update the user profile with display name
@@ -82,8 +88,53 @@ const SignUp = () => {
       }
     }
   };
+  const handleGoogleSignUp = async () => {
+    const provider = new GoogleAuthProvider();
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
 
+      const userDoc = {
+        name: user.displayName || "N/A",
+        email: user.email || "N/A",
+        age: "N/A",
+        sex: "N/A",
+        height: "N/A",
+        weight: "N/A",
+        uid: user.uid,
+        createdAt: new Date().toISOString(),
+      };
+      await setDoc(doc(db, "users", user.uid), userDoc);
+
+      toast.success(
+        "Sign-up successful! Please fill in your personal details from 'Profile'.",
+        {
+          position: "bottom-right",
+          autoClose: 3000,
+        }
+      );
+      setTimeout(() => {
+        router.push("/login");
+      }, 2000);
+    } catch (error: unknown) {
+      if (error instanceof FirebaseError) {
+        console.error("Firebase error during Google sign-up:", error.message);
+        toast.error(`An error occurred. Please try again.`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      } else {
+        console.error("Unknown error during Google sign-up:", error);
+        toast.error("An unknown error occurred. Please try again.", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
+    }
+  };
   return (
+    <div>
+      <Navbar />
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <div className="w-full max-w-sm p-6 bg-gray-900 rounded-md border border-gray-300 shadow-lg text-white">
         <h2 className="text-2xl font-medium mb-4 text-center">Sign Up</h2>
@@ -218,6 +269,18 @@ const SignUp = () => {
           Sign Up
         </button>
 
+        {/* Google Sign-Up */}
+        <div className="mt-4 text-center">
+          <button
+            onClick={handleGoogleSignUp}
+            className="flex items-center justify-center w-full py-2 bg-gray-900 text-white font-medium rounded-md border border-gray-300 hover:bg-cyan-600 transition duration-200"
+          >
+            <FcGoogle className="mr-2 text-2xl" /> {/* Google Icon */}
+            Sign Up with Google
+          </button>
+        </div>
+
+
         <div className="mt-4 text-center">
           <p>
             Already have an account?{" "}
@@ -227,6 +290,7 @@ const SignUp = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

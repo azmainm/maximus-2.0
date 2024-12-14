@@ -3,18 +3,21 @@
 "use client";
 
 import { useState } from "react";
+import Navbar from "../ui/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FcGoogle } from "react-icons/fc";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter(); // Initialize the router
+  const googleProvider = new GoogleAuthProvider();
 
   const handleLogin = async () => {
     if (!email || !password) {
@@ -65,7 +68,45 @@ const Login = () => {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, googleProvider);
+      const user = result.user;
+
+      const userDoc = await getDoc(doc(db, "users", user.uid));
+      if (!userDoc.exists()) {
+        // If user doesn't exist in Firestore, optionally create an entry
+        toast.error("User not registered!", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+        return;
+      }
+
+      toast.success("Google sign-in successful!", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      router.push("/blog");
+    } catch (error) {
+      if (error instanceof Error) {
+        toast.error(`Google sign-in failed: ${error.message}`, {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      } else {
+        toast.error("An unknown error occurred during Google sign-in.", {
+          position: "bottom-right",
+          autoClose: 3000,
+        });
+      }
+    }
+  };
+
+
   return (
+    <div>
+      <Navbar />
     <div className="flex items-center justify-center min-h-screen bg-gray-900">
       <ToastContainer />
       <div className="w-full max-w-sm p-6 bg-gray-900 rounded-md border border-gray-300 shadow-lg text-white">
@@ -102,6 +143,17 @@ const Login = () => {
           Log In
         </button>
 
+        {/* Google Sign-in */}
+        <div className="mt-4 text-center">
+        <button
+          onClick={handleGoogleLogin}
+          className="flex items-center justify-center w-full py-2 bg-gray-900 text-white font-medium rounded-md border border-gray-300 hover:bg-cyan-600 transition duration-200"
+        >
+          <FcGoogle className="mr-2 text-2xl" />
+          Sign in with Google
+        </button>
+        </div>
+
         <div className="mt-4 text-center">
           <p>
             Do not have an account?{" "}
@@ -111,6 +163,7 @@ const Login = () => {
           </p>
         </div>
       </div>
+    </div>
     </div>
   );
 };

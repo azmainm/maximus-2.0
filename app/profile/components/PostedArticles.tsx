@@ -108,7 +108,11 @@ const PostedArticles = () => {
     <div>
       <h1 className="font-poppins font-semibold text-lg mb-4 text-center">Posted Articles</h1>
       {loading ? (
-        <p>Loading...</p>
+        <div
+        className="animate-pulse relative p-4 rounded-md border border-gray-300 bg-gray-900 shadow-md hover:shadow-cyan-300 hover:scale-105 transition ease-in-out duration-300"
+        style={{ width: "300px", height: "120px" }}>
+        </div>
+      
       ) : articles.length === 0 ? (
         <p>No articles found.</p>
       ) : (
