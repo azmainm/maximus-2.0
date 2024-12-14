@@ -4,28 +4,14 @@
 import { useState, useEffect } from "react";
 import WorkoutResponse from "./WorkoutResponse";
 
-// interface WorkoutFormData {
-//   workoutType: string;
-//   sex: string;
-//   age: string;
-//   height: string;
-//   weight: string;
-//   duration: string;
-// }
-
 const WorkoutForm = () => {
-//   onFormSubmit,
-// }: {
-//   onFormSubmit: (formData: WorkoutFormData) => void;
-// }) => {
+
   const [workoutTypes, setWorkoutTypes] = useState<string[]>([]);
   const [filteredWorkoutTypes, setFilteredWorkoutTypes] = useState<string[]>([]);
   const [workoutType, setWorkoutType] = useState<string>("");
 
   const [sex, setSex] = useState<string>("Male");
   const [age, setAge] = useState<string>("");
-  // const [height, setHeight] = useState<string>("");
-  // const [heightUnit, setHeightUnit] = useState<string>("cm");
   const [weight, setWeight] = useState<string>("");
   const [weightUnit, setWeightUnit] = useState<string>("kg");
   const [duration, setDuration] = useState<string>("");
@@ -62,9 +48,8 @@ const WorkoutForm = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // const formattedHeight = `${height} ${heightUnit}`;
     const formattedWeight = `${weight} ${weightUnit}`;
-    const payload = { workoutType, sex, age, duration };
+    const payload = { workoutType, sex, age, height: null, weight: formattedWeight, duration};
 
     setPrompt(`Workout Type: ${workoutType}\nSex: ${sex}\nAge: ${age}\nWeight: ${formattedWeight}\nDuration: ${duration}`);
     setIsLoading(true);
@@ -154,27 +139,7 @@ const WorkoutForm = () => {
           required
         />
       </div>
-      {/* <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2">Height</label>
-        <div className="flex gap-2">
-          <input
-            type="number"
-            value={height}
-            onChange={(e) => setHeight(e.target.value)}
-            className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-            placeholder="e.g., 170"
-            required
-          />
-          <select
-            value={heightUnit}
-            onChange={(e) => setHeightUnit(e.target.value)}
-            className="p-2 bg-gray-800 border border-gray-800 rounded-md"
-          >
-            <option>cm</option>
-            <option>ft & in</option>
-          </select>
-        </div>
-      </div> */}
+      
       <div className="mb-4">
         <label className="block text-sm font-semibold mb-2">Weight</label>
         <div className="flex gap-2">

@@ -8,9 +8,9 @@ export async function POST(request: Request) {
     const data = await request.json();
     console.log("Received data:", data); // Debug log
 
-    const { workoutType, sex, age, height, weight, duration } = data;
+    const { workoutType, sex, age, weight, duration } = data;
 
-    if (!workoutType || !sex || !age || !height || !weight || !duration) {
+    if (!workoutType || !sex || !age || !weight || !duration) {
       console.error("Validation error: Missing fields"); // Debug log
       return NextResponse.json(
         { error: "All fields are required" },

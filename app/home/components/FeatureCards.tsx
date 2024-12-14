@@ -30,10 +30,10 @@ const FeatureCards = () => {
 
   const buttonClickVariant = {
     click: {
-      scale: [1, 100],
-      rotate: [0, 360],
+      scale: [1, 50],
+      rotate: [0, 90],
       backgroundColor: "#FFFFFF", // Make the button fully white
-      transition: { duration: 2, ease: "easeInOut" },
+      transition: { duration: 0.5, ease: "easeInOut" },
     },
   };
 

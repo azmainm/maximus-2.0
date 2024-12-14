@@ -6,6 +6,7 @@ import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "./context/AuthContext";
+import LoaderWrapper from "./ui/LoadWrapper";
 
 export const metadata: Metadata = {
   title: "Maximus",
@@ -25,12 +26,13 @@ export default function RootLayout({
         <link rel="icon" href="/favicon.ico" type="image/x-icon" />
         <link rel="icon" href="/logo_s.png" type="image/png" />
       </head>
-      <body
-      >
-        <AuthProvider>
-          <ToastContainer />
-          {children}
-        </AuthProvider>
+      <body>
+        <LoaderWrapper>
+          <AuthProvider>
+            <ToastContainer />
+            {children}
+          </AuthProvider>
+        </LoaderWrapper>
       </body>
     </html>
   );

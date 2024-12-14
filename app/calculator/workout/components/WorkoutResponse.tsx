@@ -27,7 +27,7 @@ const WorkoutResponse = ({
               <div className="h-4 bg-gray-900 rounded w-1/2"></div>
             </div>
           ) : (
-            <p>{response}</p>
+            <p>You have burned <span className="font-semibold text-cyan-300">{response}</span></p>
           )}
         </div>
       </div>
