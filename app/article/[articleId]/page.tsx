@@ -105,8 +105,8 @@ const ArticlePage = () => {
               />
             </button>
           </div>
-          <p className="text-gray-400 mb-4">By {article.userName}</p>
-          <p className="text-gray-500 mb-4">{article.tldr}</p>
+          <p className="text-gray-300 mb-4">By {article.userName}</p>
+          <p className="text-gray-400 mb-4">{article.tldr}</p>
           <p className="text-md whitespace-pre-wrap">{article.content}</p>
         </div>
       </div>

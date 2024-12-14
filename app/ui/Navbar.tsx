@@ -28,7 +28,7 @@ import { useAuth } from "../context/AuthContext";
       try {
         await signOut(auth); // Sign out the user using Firebase
         logout(); // Update context state
-        router.push("/"); // Redirect to home page
+        router.push("/blog"); // Redirect to home page
       } catch (error) {
         console.error("Error logging out:", error);
       }

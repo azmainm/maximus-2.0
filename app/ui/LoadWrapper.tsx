@@ -22,7 +22,7 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
   useEffect(() => {
     setLoading(true); // Show loader on route change
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]); // Randomly select a quote
-    const timer = setTimeout(() => setLoading(false), 2000); // Simulate loading time
+    const timer = setTimeout(() => setLoading(false), 1200); // Simulate loading time
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, [pathname]); // Only depend on pathname as quotes are constants
 
@@ -37,11 +37,21 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
         flexDirection: "column", // Stack elements vertically
         color: "white", // Text color
         fontFamily: "Arial, sans-serif", // Set a clean font
+        padding: "0 20px", // Add padding to prevent text from touching sides
       }}
     >
-      <ClimbingBoxLoader color="#00FFFF" size={25} /> {/* Larger loader */}
-      <p style={{ marginTop: "40px", fontSize: "18px", fontStyle: "italic" }}>
-        {quote} {/* Display the randomly selected quote */}
+      <ClimbingBoxLoader color="#d1d5db" size={25} /> {/* Larger loader */}
+      <p
+        style={{
+          marginTop: "40px",
+          fontSize: "18px",
+          fontStyle: "italic",
+          textAlign: "center", // Center-align the text
+          wordWrap: "break-word", // Ensure long quotes wrap correctly
+          maxWidth: "90%", // Limit the width to make it more responsive
+        }}
+      >
+        {quote}
       </p>
     </div>
   ) : (

@@ -4,7 +4,7 @@ import { FaLinkedin, FaGithub, FaGlobe } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-black text-white py-8 text-center">
+    <footer className="bg-gray-950 text-white py-8 text-center">
       <div className="flex justify-center gap-6 mb-4">
         <a href="https://www.linkedin.com/in/azmain-morshed/" target="_blank" rel="noopener noreferrer" className="hover:text-cyan-300 hover:scale-105 transition ease-in-out duration-300">
           <FaLinkedin size={24} />

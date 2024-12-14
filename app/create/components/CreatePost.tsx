@@ -106,7 +106,7 @@ const CreatePost = () => {
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
             <div className="relative w-11/12 md:w-1/2 lg:w-1/3 p-6 bg-black border border-cyan-300 rounded-lg shadow-lg text-white">
               <h2 className="text-2xl font-bold mb-4">Article Created</h2>
-              <p className="mb-6">Your article has been created successfully.</p>
+              <p className="mb-6">Your article has been posted successfully.</p>
               <button
                 onClick={() => {
                   setShowSuccessModal(false);

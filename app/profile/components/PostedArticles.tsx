@@ -153,20 +153,20 @@ const PostedArticles = () => {
 
       {/* Delete Confirmation Modal */}
       {showDeleteModal && selectedArticle && (
-        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-950 bg-opacity-50 z-50">
           <div className="bg-gray-900 z-50 border border-gray-600 p-6 rounded-lg shadow-lg">
-            <h2 className="text-lg font-medium text-cyan-100 mb-3">Confirm Deletion</h2>
+            <h2 className="text-lg font-medium text-cyan-50 mb-3">Confirm Deletion</h2>
             <p>Are you sure you want to delete the article?</p>
             <div className="flex justify-end mt-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="px-4 py-2 bg-cyan-100 text-gray-900 rounded-lg mr-4 hover:bg-cyan-400"
+                className="px-4 py-2 bg-cyan-50 text-gray-900 rounded-lg mr-4 hover:bg-cyan-400"
               >
                 No
               </button>
               <button
                 onClick={handleDeleteArticle}
-                className="px-4 py-2 bg-red-900 text-white rounded-lg hover:bg-red-700"
+                className="px-4 py-2 bg-red-700 text-white rounded-lg hover:bg-red-700"
               >
                 Yes
               </button>
