@@ -16,7 +16,19 @@ const Footer = () => {
           <FaGlobe size={24} />
         </a>
       </div>
-      <p className="text-sm">Developed by Azmain Morshed</p>
+      <p className="text-sm font-italic mt-3">
+        Take a look at my{" "}
+        <a
+          href="https://azmainmorshed.vercel.app/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-cyan-300 hover:underline"
+        >
+          portfolio
+        </a>
+      </p>
+      <p className="text-sm mt-4 text-gray-300">Developed by Azmain Morshed</p>
+      
     </footer>
   );
 };
