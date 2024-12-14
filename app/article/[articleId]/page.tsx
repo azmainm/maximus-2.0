@@ -8,6 +8,8 @@ import Navbar from "../../ui/Navbar";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
 import { useAuth } from "../../context/AuthContext"; // Assuming you have an AuthContext
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 
 interface Article {
   title: string;
@@ -20,7 +22,7 @@ const ArticlePage = () => {
   const { articleId } = useParams();
   const [article, setArticle] = useState<Article | null>(null);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
-  const { userId } = useAuth();
+  const { userId, isLoggedIn } = useAuth();
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -54,6 +56,12 @@ const ArticlePage = () => {
   }, [articleId, userId]);
 
   const toggleFavorite = async () => {
+    if (!isLoggedIn) {
+      toast.error("Please log in to favorite articles.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });return;
+    }
     if (!userId || !articleId || Array.isArray(articleId)) return;
     const id = articleId.split("-")[0];
     const userDocRef = doc(db, "users", userId);

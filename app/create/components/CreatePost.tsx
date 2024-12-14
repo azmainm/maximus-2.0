@@ -2,7 +2,7 @@
 "use client";
 import React, { useState} from "react";
 import { useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+//import { motion } from "framer-motion";
 import { db } from "../../../firebaseConfig";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import { toast } from "react-toastify";
@@ -90,15 +90,15 @@ const CreatePost = () => {
             value={content}
             onChange={handleContentChange}
           />
-          <motion.button
+          <button
             onClick={handlePost}
             className="px-6 py-3 mt-4 bg-gray-900 border border-white rounded-lg hover:bg-cyan-800 hover:scale-105 transition ease-in duration-200"
-            animate={isPosting ? { scale: 1.2, rotate: 360 } : {}}
-            transition={{ duration: 0.5, ease: "easeInOut" }}
+            //animate={isPosting ? { scale: 1.2, rotate: 360 } : {}}
+            //transition={{ duration: 0.5, ease: "easeInOut" }}
             disabled={isPosting}
           >
             {isPosting ? "Posting..." : "Post"}
-          </motion.button>
+          </button>
         </div>
 
         {/* Success Modal */}

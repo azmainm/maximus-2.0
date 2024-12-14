@@ -55,7 +55,9 @@ import { useAuth } from "../context/AuthContext";
       <nav className="bg-gray-900 text-white">
         <div className="flex justify-between items-center px-4 py-2">
           <div className="flex items-center">
-            <Image src="/images/logo_s2.png" alt="Maximus Logo" width={40} height={40} />
+          <Link href="/" aria-label="Home">
+    <Image src="/images/logo_s2.png" alt="Maximus Logo" width={40} height={40} />
+  </Link>
           </div>
   
           <button className="block md:hidden text-white focus:outline-none" onClick={toggleMenu}>

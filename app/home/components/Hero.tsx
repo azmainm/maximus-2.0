@@ -23,7 +23,7 @@ const Hero = () => {
       </h2>
       <div className="text-center font-semibold mb-8">
         <motion.h1
-          className="font-poppins text-7xl inline-block"
+          className="font-poppins text-7xl inline-block px-1"
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3, duration: 1.2, ease: "easeInOut" }}

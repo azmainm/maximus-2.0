@@ -3,13 +3,14 @@
 
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
-import { auth } from "../../firebaseConfig"; // Adjust import path
-import { getDoc, doc } from "firebase/firestore"; // Import Firestore functions
+import { auth } from "../../firebaseConfig"; 
+import { getDoc, doc } from "firebase/firestore"; 
 import { db } from "../../firebaseConfig";
+
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  currentUser: User | null; // Firebase User object or null if not logged in
+  currentUser: User | null; 
   login: () => void;
   logout: () => void;
   userId: string | null;
