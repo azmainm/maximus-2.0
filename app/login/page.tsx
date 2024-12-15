@@ -35,7 +35,7 @@ const Login = () => {
       // Check if the user exists in Firestore
       const userDoc = await getDoc(doc(db, "users", user.uid));
       if (!userDoc.exists()) {
-        toast.error("User not registered!", {
+        toast.error("User not registered! Please sign up first.", {
           position: "bottom-right",
           autoClose: 3000,
         });

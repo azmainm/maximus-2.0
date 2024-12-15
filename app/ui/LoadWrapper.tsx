@@ -22,7 +22,7 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
   useEffect(() => {
     setLoading(true); // Show loader on route change
     setQuote(quotes[Math.floor(Math.random() * quotes.length)]); // Randomly select a quote
-    const timer = setTimeout(() => setLoading(false), 1200); // Simulate loading time
+    const timer = setTimeout(() => setLoading(false), 1800); // Simulate loading time
     return () => clearTimeout(timer); // Cleanup timer on unmount
   }, [pathname]); // Only depend on pathname as quotes are constants
 

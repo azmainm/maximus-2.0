@@ -107,7 +107,7 @@ const SignUp = () => {
       await setDoc(doc(db, "users", user.uid), userDoc);
 
       toast.success(
-        "Sign-up successful! Please fill in your personal details from 'Profile'.",
+        "Sign-up successful! Log in and fill in your personal details from 'Profile'.",
         {
           position: "bottom-right",
           autoClose: 3000,
