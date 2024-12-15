@@ -2,8 +2,9 @@
 
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import Head from "next/head";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../../ui/Navbar";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
@@ -16,6 +17,7 @@ interface Article {
   tldr: string;
   userName: string;
   content: string;
+  userId: string;
 }
 
 const ArticlePage = () => {
@@ -23,6 +25,8 @@ const ArticlePage = () => {
   const [article, setArticle] = useState<Article | null>(null);
   const [isFavorited, setIsFavorited] = useState<boolean>(false);
   const { userId, isLoggedIn } = useAuth();
+  const [isEditing, setIsEditing] = useState<boolean>(false);
+  const [editableArticle, setEditableArticle] = useState<Partial<Article>>({});
 
   useEffect(() => {
     const fetchArticle = async () => {
@@ -33,7 +37,9 @@ const ArticlePage = () => {
         const docRef = doc(db, "posts", id);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
-          setArticle(docSnap.data() as Article);
+          const data = docSnap.data() as Article;
+          setArticle(data);
+          setEditableArticle({ title: data.title, tldr: data.tldr, content: data.content });
 
           // Check if the article is already favorited by the user
           if (userId) {
@@ -85,29 +91,111 @@ const ArticlePage = () => {
     }
   };
 
+  const handleEditToggle = () => {
+    setIsEditing(!isEditing);
+  };
+
+  const handleInputChange = (field: keyof Article, value: string) => {
+    setEditableArticle((prev) => ({ ...prev, [field]: value }));
+  };
+
+  const saveChanges = async () => {
+    if (!articleId || Array.isArray(articleId)) return;
+    const id = articleId.split("-")[0];
+    const docRef = doc(db, "posts", id);
+
+    try {
+      await updateDoc(docRef, {
+        title: editableArticle.title,
+        tldr: editableArticle.tldr,
+        content: editableArticle.content,
+      });
+      setArticle((prev) => ({ ...prev!, ...editableArticle }));
+      setIsEditing(false);
+      toast.success("Article updated successfully.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    } catch (error) {
+      console.error("Error saving changes:", error);
+      toast.error("Failed to save changes.", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+    }
+  };
+
+
   if (!article) {
     return <div className="text-white text-center mt-20">Article not found</div>;
   }
 
   return (
     <div>
+      <Head>
+        <title>{article.title} - Fitness Hub</title>
+        <meta name="description" content={article.tldr || "Read this amazing article on fitness."} />
+        <meta name="author" content={article.userName} />
+        <meta property="og:title" content={article.title} />
+        <meta property="og:description" content={article.tldr} />
+        <meta property="og:type" content="article" />
+      </Head>
       <Navbar />
       <div className="min-h-screen bg-gray-900 text-white font-poppins p-4">
         <div className="max-w-4xl mx-auto p-6 bg-gray-900 border border-cyan-300 rounded-md shadow-md">
           <div className="flex justify-between items-center">
-            <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
-            <button onClick={toggleFavorite} aria-label="Favorite">
-              <FontAwesomeIcon
-                icon={faHeart}
-                className={`transition-all duration-300 ${
-                  isFavorited ? "text-red-500" : "text-gray-500"
-                }`}
+            {isEditing ? (
+              <input
+                type="text"
+                value={editableArticle.title || ""}
+                onChange={(e) => handleInputChange("title", e.target.value)}
+                className="text-3xl font-bold mb-4 bg-gray-800 text-white p-2 rounded-md"
               />
-            </button>
+            ) : (
+              <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
+            )}
+
+            <div className="flex items-center gap-4">
+              {article.userId === userId && (
+                <button onClick={isEditing ? saveChanges : handleEditToggle} aria-label="Edit">
+                  <FontAwesomeIcon
+                    icon={isEditing ? faCheck : faEdit}
+                    className="text-cyan-500 transition-all duration-300 ml-2"
+                  />
+                </button>
+              )}
+              <button onClick={toggleFavorite} aria-label="Favorite">
+                <FontAwesomeIcon
+                  icon={faHeart}
+                  className={`transition-all duration-300 ${
+                    isFavorited ? "text-red-500" : "text-gray-500"
+                  }`}
+                />
+              </button>
+            </div>
           </div>
+
           <p className="text-gray-300 mb-4">By {article.userName}</p>
-          <p className="text-gray-400 mb-4">{article.tldr}</p>
-          <p className="text-md whitespace-pre-wrap">{article.content}</p>
+
+          {isEditing ? (
+            <textarea
+              value={editableArticle.tldr || ""}
+              onChange={(e) => handleInputChange("tldr", e.target.value)}
+              className="text-gray-400 mb-4 bg-gray-800 text-white p-2 rounded-md w-full"
+            />
+          ) : (
+            <p className="text-gray-400 mb-4">{article.tldr}</p>
+          )}
+
+          {isEditing ? (
+            <textarea
+              value={editableArticle.content || ""}
+              onChange={(e) => handleInputChange("content", e.target.value)}
+              className="text-md whitespace-pre-wrap bg-gray-800 text-white p-2 rounded-md w-full"
+            />
+          ) : (
+            <p className="text-md whitespace-pre-wrap">{article.content}</p>
+          )}
         </div>
       </div>
     </div>
