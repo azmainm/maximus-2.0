@@ -4,6 +4,7 @@
 import React, { useState, useEffect } from "react";
 import { ClimbingBoxLoader } from "react-spinners";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export default function LoaderWrapper({ children }: { children: React.ReactNode }) {
   const [loading, setLoading] = useState(false);
@@ -27,34 +28,29 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
   }, [pathname]); // Only depend on pathname as quotes are constants
 
   return loading ? (
+    <div style={{ position: "relative", height: "100vh", width: "100vw" }}>
+      {/* Optimized Image */}
+      <Image
+        src="/images/background_loader.webp"
+        alt="Loader Background"
+        layout="fill" // Fills the container
+        objectFit="cover" // Ensures the image covers the entire area
+        quality={75} // Adjust quality for faster loads
+        priority // Ensures the image is loaded ASAP
+        placeholder="blur"
+        blurDataURL="/images/low-res-blur.jpg" 
+      />
     <div
       style={{
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         height: "100vh",
-        backgroundImage: "url('/images/background_loader.jpg')", // Set background image
-        backgroundSize: "cover", // Ensure the image covers the entire area
-        backgroundPosition: "center", // Center the image
-        backgroundAttachment: "fixed", // Keep the image fixed while scrolling
-        flexDirection: "column", // Stack elements vertically
-        color: "white", // Text color
-        fontFamily: "Arial, sans-serif", // Set a clean font
-        padding: "0 20px", // Add padding to prevent text from touching sides
-        position: "relative", // To place the overlay
+        flexDirection: "column",
+        zIndex: 1, // Content above the image
+        color: "white",
       }}
     >
-      {/* <div
-        style={{
-          position: "absolute", // Position the overlay over the image
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.7)", // Add transparent layer
-          zIndex: 1, // Ensure overlay is above the image but behind the content
-        }}
-      /> */}
       <ClimbingBoxLoader color="#d1d5db" size={25} /> {/* Larger loader */}
       <p
         style={{
@@ -70,29 +66,7 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
         {quote}
       </p>
 
-      {/* Media Queries for Responsiveness */}
-      <style jsx>{`
-        @media (max-width: 768px) {
-          div {
-            padding: 0 10px; // Reduce padding on mobile
-          }
-          p {
-            font-size: 16px; // Adjust font size for smaller screens
-            margin-top: 20px; // Reduce top margin on mobile
-          }
-          .react-spinner-climbing-box-loader {
-            margin-top: 20px; // Adjust spacing between loader and quote
-          }
-        }
-        
-        @media (max-width: 480px) {
-          p {
-            font-size: 14px; // Further reduce font size for very small screens
-            max-width: 80%; // Reduce max-width to avoid overflow
-            margin-top: 15px; // Further reduce margin on small screens
-          }
-        }
-      `}</style>
+      </div>
     </div>
   ) : (
     <>{children}</>
