@@ -67,6 +67,7 @@ const FeatureCards = () => {
           style={{
             color: isButtonClicked ? "#06b6d4" : "#ffffff",
             textShadow: "0px 4px 6px rgb(103, 232, 249)",
+            border: "rgb(103, 232, 249)",
           }}
         >
           {isButtonClicked ? "Breathe Out" : "Breathe In"}

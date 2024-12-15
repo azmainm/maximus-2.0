@@ -15,3 +15,10 @@ const LandingPage = () => {
 };
 
 export default LandingPage;
+
+export async function getStaticProps() {
+  return {
+    props: {
+    },
+  };
+}
