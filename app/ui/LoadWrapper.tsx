@@ -44,7 +44,7 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
         position: "relative", // To place the overlay
       }}
     >
-      <div
+      {/* <div
         style={{
           position: "absolute", // Position the overlay over the image
           top: 0,
@@ -54,7 +54,7 @@ export default function LoaderWrapper({ children }: { children: React.ReactNode 
           backgroundColor: "rgba(0, 0, 0, 0.7)", // Add transparent layer
           zIndex: 1, // Ensure overlay is above the image but behind the content
         }}
-      />
+      /> */}
       <ClimbingBoxLoader color="#d1d5db" size={25} /> {/* Larger loader */}
       <p
         style={{
