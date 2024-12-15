@@ -66,8 +66,7 @@ const FeatureCards = () => {
           duration-700 ease-in-out ${isButtonClicked ? "translate-y-[-10%] scale-110" : "translate-y-0 scale-100"}`}
           style={{
             color: isButtonClicked ? "#06b6d4" : "#ffffff",
-            textShadow: "0px 4px 6px rgb(103, 232, 249)",
-            border: "rgb(103, 232, 249)",
+            textShadow: "0px 4px 6px rgba(0, 0, 0, 0.4)",
           }}
         >
           {isButtonClicked ? "Breathe Out" : "Breathe In"}
