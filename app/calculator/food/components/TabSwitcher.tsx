@@ -16,11 +16,11 @@ const TabSwitcher = () => {
 
   return (
     <div className="flex justify-center gap-0 pt-4 pb-0 bg-gray-900 text-white">
-      <Link href="/calculator/food">
-        <button className={getButtonClass("/calculator/food")} >Food</button>
-      </Link>
       <Link href="/calculator/workout">
-        <button className={getButtonClass("/calculator/workout")}>Workout</button>
+        <button className={getButtonClass("/calculator/workout")} >Workout</button>
+      </Link>
+      <Link href="/calculator/food">
+        <button className={getButtonClass("/calculator/food")}>food</button>
       </Link>
     </div>
   );

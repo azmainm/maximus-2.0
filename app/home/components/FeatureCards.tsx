@@ -63,10 +63,9 @@ const FeatureCards = () => {
       >
         <span
           className={`absolute inset-0 flex items-center justify-center font-light text-2xl transition-transform
-          duration-700 ease-in-out ${isButtonClicked ? "translate-y-[-10%] scale-110" : "translate-y-0 scale-100"}`}
+          duration-700 ease-in-out ${isButtonClicked ? "scale-110" : "scale-100"}`}
           style={{
-            color: isButtonClicked ? "#06b6d4" : "#ffffff",
-            textShadow: "0px 4px 6px rgba(0, 0, 0, 0.4)",
+            color: isButtonClicked ? "#000000" : "#ffffff",
           }}
         >
           {isButtonClicked ? "Breathe Out" : "Breathe In"}

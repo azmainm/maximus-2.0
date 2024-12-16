@@ -38,7 +38,7 @@ import { useAuth } from "../context/AuthContext";
       ? [
           { name: "Home", href: "/" },
           { name: "Blog", href: "/blog" },
-          { name: "Calculator", href: "/calculator/food" },
+          { name: "Calculator", href: "/calculator/workout" },
           { name: "Profile", href: "/profile" },
           { name: "Logout", action: handleSignOut },
         ]
@@ -46,7 +46,7 @@ import { useAuth } from "../context/AuthContext";
       : [
           { name: "Home", href: "/" },
           { name: "Blog", href: "/blog" },
-          { name: "Calculator", href: "/calculator/food" },
+          { name: "Calculator", href: "/calculator/workout" },
           { name: "Login", href: "/login" },
         ];
         console.log(isLoggedIn+" from navbar")

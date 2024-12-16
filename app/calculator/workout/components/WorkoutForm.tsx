@@ -3,19 +3,20 @@
 
 import { useState, useEffect } from "react";
 import WorkoutResponse from "./WorkoutResponse";
+import { useAuth } from "../../../context/AuthContext"; // Import the AuthContext hook
+import { getDoc, doc } from "firebase/firestore"; 
+import { db } from "../../../../firebaseConfig";
 
 const WorkoutForm = () => {
-
+  const { isLoggedIn, userId } = useAuth();
   const [workoutTypes, setWorkoutTypes] = useState<string[]>([]);
   const [filteredWorkoutTypes, setFilteredWorkoutTypes] = useState<string[]>([]);
   const [workoutType, setWorkoutType] = useState<string>("");
-
   const [sex, setSex] = useState<string>("Male");
   const [age, setAge] = useState<string>("");
   const [weight, setWeight] = useState<string>("");
   const [weightUnit, setWeightUnit] = useState<string>("kg");
   const [duration, setDuration] = useState<string>("");
-
   const [prompt, setPrompt] = useState<string>("");
   const [response, setResponse] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -37,6 +38,36 @@ const WorkoutForm = () => {
     fetchWorkoutTypes();
   }, []);
 
+  // Fetch user data (sex, age, weight) if the user is logged in
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (isLoggedIn && userId) {
+        try {
+          const userDocRef = doc(db, "users", userId);
+          const userDocSnap = await getDoc(userDocRef);
+  
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data();
+            if (userData) {
+              setSex(userData.sex || "Male");
+              setAge(userData.age || "");
+              
+              // Handle weight: Remove any non-numeric characters and convert to a number
+              const weight = userData.weight ? parseFloat(userData.weight.replace(/[^0-9.-]+/g, "")) : "";
+              setWeight(isNaN(weight) ? "" : weight); // Set to empty string if weight is not a valid number
+            }
+          } else {
+            console.log("No user document found");
+          }
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+  
+    fetchUserData();
+  }, [isLoggedIn, userId]);
+  
   // Handle search within dropdown
   const handleSearchChange = (query: string) => {
     setWorkoutType(query);
@@ -101,7 +132,6 @@ const WorkoutForm = () => {
     ))}
   </ul>
 )}
-
       </div>
       <div className="mb-4">
         <label className="block text-sm font-semibold mb-2">Sex</label>

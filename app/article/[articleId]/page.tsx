@@ -20,6 +20,7 @@ interface Article {
   userId: string;
 }
 
+
 const ArticlePage = () => {
   const { articleId } = useParams();
   const [article, setArticle] = useState<Article | null>(null);

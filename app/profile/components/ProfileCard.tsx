@@ -105,11 +105,11 @@ const ProfileCard = () => {
           <span className="text-gray-300">
             {isEditing ? (
               <input
-                type="text"
-                value={editedUserInfo?.full_name || ""}
-                onChange={(e) => handleInputChange("full_name", e.target.value)}
-                className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none"
-              />
+              type="text"
+              value={editedUserInfo?.full_name || ""}
+              onChange={(e) => handleInputChange("full_name", e.target.value)}
+              className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none max-w-full w-full sm:max-w-xs"
+            />            
             ) : (
               userInfo?.full_name || "User"
             )}
@@ -117,7 +117,7 @@ const ProfileCard = () => {
         </h1>
         <button
           onClick={isEditing ? handleSave : handleEditToggle}
-          className="text-cyan-500 hover:text-cyan-700 font-bold"
+          className="text-cyan-500 hover:text-cyan-700 font-bold ml-2"
         >
           {isEditing ? "✓" : "Edit"}
         </button>
