@@ -51,10 +51,12 @@ const WorkoutForm = () => {
             if (userData) {
               setSex(userData.sex || "Male");
               setAge(userData.age || "");
-              
+  
               // Handle weight: Remove any non-numeric characters and convert to a number
-              const weight = userData.weight ? parseFloat(userData.weight.replace(/[^0-9.-]+/g, "")) : "";
-              setWeight(isNaN(weight) ? "" : weight); // Set to empty string if weight is not a valid number
+              const weight = userData.weight
+                ? userData.weight.replace(/[^0-9.-]+/g, "") // Remove non-numeric characters
+                : "";
+              setWeight(weight); // Set the cleaned string to weight (still a string)
             }
           } else {
             console.log("No user document found");
@@ -67,6 +69,7 @@ const WorkoutForm = () => {
   
     fetchUserData();
   }, [isLoggedIn, userId]);
+  
   
   // Handle search within dropdown
   const handleSearchChange = (query: string) => {
