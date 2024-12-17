@@ -8,7 +8,7 @@ import { faHeart, faEdit, faCheck } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../../ui/Navbar";
 import { doc, getDoc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
 import { db } from "../../../firebaseConfig";
-import { useAuth } from "../../context/AuthContext"; // Assuming you have an AuthContext
+import { useAuth } from "../../context/AuthContext"; 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css"; 
 
@@ -145,12 +145,12 @@ const ArticlePage = () => {
       <div className="min-h-screen bg-gray-900 text-white font-poppins p-4">
         <div className="max-w-4xl mx-auto p-6 bg-gray-900 border border-cyan-300 rounded-md shadow-md">
           <div className="flex justify-between items-center">
-            {isEditing ? (
+          {isEditing ? (
               <input
                 type="text"
                 value={editableArticle.title || ""}
                 onChange={(e) => handleInputChange("title", e.target.value)}
-                className="text-3xl font-bold mb-4 bg-gray-800 text-white p-2 rounded-md"
+                className="w-full text-3xl font-bold mb-4 bg-gray-800 text-white p-2 rounded-md"
               />
             ) : (
               <h1 className="text-3xl font-bold mb-4">{article.title}</h1>
@@ -182,7 +182,7 @@ const ArticlePage = () => {
             <textarea
               value={editableArticle.tldr || ""}
               onChange={(e) => handleInputChange("tldr", e.target.value)}
-              className="text-gray-400 mb-4 bg-gray-800 text-white p-2 rounded-md w-full"
+              className="w-full text-gray-400 mb-4 bg-gray-800 text-white p-2 rounded-md h-32"
             />
           ) : (
             <p className="text-gray-400 mb-4">{article.tldr}</p>
@@ -192,7 +192,7 @@ const ArticlePage = () => {
             <textarea
               value={editableArticle.content || ""}
               onChange={(e) => handleInputChange("content", e.target.value)}
-              className="text-md whitespace-pre-wrap bg-gray-800 text-white p-2 rounded-md w-full"
+              className="w-full text-md whitespace-pre-wrap bg-gray-800 text-white p-2 rounded-md h-80"
             />
           ) : (
             <p className="text-md whitespace-pre-wrap">{article.content}</p>
