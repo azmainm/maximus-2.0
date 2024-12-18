@@ -17,6 +17,7 @@ const WorkoutForm = () => {
   const [weight, setWeight] = useState<string>("");
   const [weightUnit, setWeightUnit] = useState<string>("kg");
   const [duration, setDuration] = useState<string>("");
+  const [durationUnit, setDurationUnit] = useState<string>("mins");
   const [prompt, setPrompt] = useState<string>("");
   const [response, setResponse] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -83,9 +84,9 @@ const WorkoutForm = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const formattedWeight = `${weight} ${weightUnit}`;
-    const payload = { workoutType, sex, age, height: null, weight: formattedWeight, duration};
+    const payload = { workoutType, sex, age, height: null, weight: formattedWeight, duration, durationUnit};
 
-    setPrompt(`Workout Type: ${workoutType}\nSex: ${sex}\nAge: ${age}\nWeight: ${formattedWeight}\nDuration: ${duration}`);
+    setPrompt(`Workout Type: ${workoutType}\nSex: ${sex}\nAge: ${age}\nWeight: ${formattedWeight}\nDuration: ${duration} ${durationUnit}`);
     setIsLoading(true);
     setResponse("");
 
@@ -195,16 +196,26 @@ const WorkoutForm = () => {
         </div>
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-semibold mb-2">Duration</label>
-        <input
-          type="number"
-          value={duration}
-          onChange={(e) => setDuration(e.target.value)}
-          className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
-          placeholder="e.g., 25 mins"
-          required
-        />
-      </div>
+          <label className="block text-sm font-semibold mb-2">Duration</label>
+          <div className="flex gap-2">
+            <input
+              type="number"
+              value={duration}
+              onChange={(e) => setDuration(e.target.value)}
+              className="w-full p-2 bg-gray-800 border border-gray-800 rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500"
+              placeholder="e.g., 25"
+              required
+            />
+            <select
+              value={durationUnit}
+              onChange={(e) => setDurationUnit(e.target.value)}
+              className="p-2 bg-gray-800 border border-gray-800 rounded-md"
+            >
+              <option>mins</option>
+              <option>hrs</option>
+            </select>
+          </div>
+        </div>
       <button
         type="submit"
         className="w-full py-2 text-gray-900 bg-gray-200 rounded-md hover:bg-cyan-600 hover:text-gray-100 transition duration-200"

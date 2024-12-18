@@ -38,7 +38,7 @@ const ProfileCard = () => {
             full_name: userData.name,
             email: userData.email,
             age: userData.age || null,
-            sex: userData.sex || null,
+            sex: userData.sex || "N/A",
             height: userData.height || null,
             weight: userData.weight || null,
           };
@@ -77,6 +77,7 @@ const ProfileCard = () => {
       await updateDoc(userDocRef, {
         name: editedUserInfo.full_name,
         age: editedUserInfo.age,
+        sex: editedUserInfo.sex,
         height: editedUserInfo.height,
         weight: editedUserInfo.weight,
       });
@@ -141,34 +142,50 @@ const ProfileCard = () => {
       </p>
       <p className="text-md mb-2">
         <span className="text-cyan-100">Sex: </span>
-        {userInfo?.sex || "N/A"}
-      </p>
-      <p className="text-md mb-2">
-        <span className="text-cyan-100">Height: </span>
         {isEditing ? (
-          <input
-            type="number"
-            value={editedUserInfo?.height || ""}
-            onChange={(e) => handleInputChange("height", Number(e.target.value) || null)}
+          <select
+            value={editedUserInfo?.sex || "N/A"}
+            onChange={(e) => handleInputChange("sex", e.target.value)}
             className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none"
-          />
+          >
+            <option>N/A</option>
+            <option>Male</option>
+            <option>Female</option>
+          </select>
         ) : (
-          userInfo?.height || "N/A"
+          userInfo?.sex || "N/A"
         )}
       </p>
       <p className="text-md mb-2">
-        <span className="text-cyan-100">Weight: </span>
-        {isEditing ? (
-          <input
-            type="number"
-            value={editedUserInfo?.weight || ""}
-            onChange={(e) => handleInputChange("weight", Number(e.target.value) || null)}
-            className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none"
-          />
-        ) : (
-          userInfo?.weight || "N/A"
-        )}
-      </p>
+  <span className="text-cyan-100">Height: </span>
+  {isEditing ? (
+    <input
+      type="text"
+      value={editedUserInfo?.height || ""}
+      placeholder="Height in cm/ft.inch"
+      onChange={(e) => handleInputChange("height", e.target.value || null)}
+      className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none"
+    />
+  ) : (
+    userInfo?.height || "N/A"
+  )}
+</p>
+
+<p className="text-md mb-2">
+  <span className="text-cyan-100">Weight: </span>
+  {isEditing ? (
+    <input
+      type="text"
+      value={editedUserInfo?.weight || ""}
+      placeholder="Weight in kg/lbs"
+      onChange={(e) => handleInputChange("weight", e.target.value || null)}
+      className="bg-gray-800 text-white rounded-md px-2 py-1 focus:outline-none"
+    />
+  ) : (
+    userInfo?.weight || "N/A"
+  )}
+</p>
+
       <p className="text-md font-bold">
         <span className="text-cyan-100">Total Posted Articles: </span>
         {totalArticles}

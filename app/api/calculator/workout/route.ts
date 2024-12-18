@@ -8,9 +8,9 @@ export async function POST(request: Request) {
     const data = await request.json();
     console.log("Received data:", data); // Debug log
 
-    const { workoutType, sex, age, weight, duration } = data;
+    const { workoutType, sex, age, weight, duration, durationUnit } = data;
 
-    if (!workoutType || !sex || !age || !weight || !duration) {
+    if (!workoutType || !sex || !age || !weight || !duration || !durationUnit) {
       console.error("Validation error: Missing fields"); // Debug log
       return NextResponse.json(
         { error: "All fields are required" },
@@ -26,6 +26,7 @@ export async function POST(request: Request) {
     const workout = workoutMetData.find(
       (item: { workoutType: string }) => item.workoutType === workoutType
     );
+    
 
     if (!workout) {
       return NextResponse.json(
@@ -39,9 +40,10 @@ export async function POST(request: Request) {
   ? parseFloat(weight) * 0.453592
   : parseFloat(weight.replace(" kg", "")); // Default to kg
 
+    const durationInMinutes = durationUnit === "hrs" ? parseFloat(duration) * 60 : parseFloat(duration);
 
     const caloriesBurned =
-      ((met * 3.5 * weightInKg) / 200) * parseFloat(duration);
+      ((met * 3.5 * weightInKg) / 200) * durationInMinutes;
 
     return NextResponse.json({ response: `${caloriesBurned.toFixed(2)} kcal` });
   } catch (err) {
