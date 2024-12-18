@@ -48,6 +48,7 @@ import { useAuth } from "../context/AuthContext";
           { name: "Blog", href: "/blog" },
           { name: "Calculator", href: "/calculator/workout" },
           { name: "Login", href: "/login" },
+          { name: "Sign Up", href: "/signup" }
         ];
         console.log(isLoggedIn+" from navbar")
   
@@ -60,7 +61,7 @@ import { useAuth } from "../context/AuthContext";
   </Link>
           </div>
   
-          <button className="block md:hidden text-white focus:outline-none" onClick={toggleMenu}>
+          <button className="block md:hidden text-white text-2xl focus:outline-none" onClick={toggleMenu}>
             {isMenuOpen ? "✖" : "☰"}
           </button>
   

@@ -23,7 +23,7 @@ const Modal = ({ title, tldr, onClose, articleId }: ModalProps) => {
       <div className="relative w-11/12 md:w-1/2 lg:w-1/3 p-6 bg-gray-900 border border-cyan-300 rounded-lg shadow-lg text-white">
         <button
           onClick={onClose}
-          className="absolute top-2 right-2 text-white hover:text-cyan-300 transition ease-in-out duration-200"
+          className="absolute text-4xl text-red-600 top-2 right-4 text-white hover:text-cyan-300 transition ease-in-out duration-200"
         >
           &times;
         </button>

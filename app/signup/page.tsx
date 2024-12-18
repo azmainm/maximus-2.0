@@ -65,12 +65,12 @@ const SignUp = () => {
       };
       await setDoc(doc(db, "users", user.uid), userDoc);
 
-      toast.success("Sign-up successful! Redirecting to login.",{
+      toast.success("Sign-up successful!",{
         position: "bottom-right",
         autoClose: 3000,
       });
       setTimeout(() => {
-        router.push("/login");
+        router.push("/blog");
       }, 2000); // Wait for the toast to display before routing
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
@@ -107,14 +107,14 @@ const SignUp = () => {
       await setDoc(doc(db, "users", user.uid), userDoc);
 
       toast.success(
-        "Sign-up successful! Log in and fill in your personal details from 'Profile'.",
+        "Sign-up successful! Please fill in your personal details from 'Profile'.",
         {
           position: "bottom-right",
           autoClose: 3000,
         }
       );
       setTimeout(() => {
-        router.push("/login");
+        router.push("/blog");
       }, 2000);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {

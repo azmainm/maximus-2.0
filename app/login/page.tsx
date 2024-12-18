@@ -6,7 +6,7 @@ import { useState } from "react";
 import Navbar from "../ui/Navbar";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, signOut  } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../../firebaseConfig";
 import { toast, ToastContainer } from "react-toastify";
@@ -39,6 +39,7 @@ const Login = () => {
           position: "bottom-right",
           autoClose: 3000,
         });
+        await signOut(auth);
         return;
       }
 
@@ -80,6 +81,7 @@ const Login = () => {
           position: "bottom-right",
           autoClose: 3000,
         });
+        await signOut(auth);
         return;
       }
 
@@ -153,8 +155,9 @@ const Login = () => {
           Sign in with Google
         </button>
         </div>
+        <div className="mt-3 text-left text-xs"><span className="text-cyan-300">Note: </span>If you have signed up with Google, please sign in with Google as well.</div>
 
-        <div className="mt-4 text-center">
+        <div className="mt-6 text-center">
           <p>
             Do not have an account?{" "}
             <Link href="/signup" className="text-cyan-500 hover:text-cyan-400">
