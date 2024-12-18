@@ -92,13 +92,14 @@ const BlogPage = () => {
 
   const handleCreateClick = (e: React.MouseEvent) => {
     if (!isLoggedIn) {
-      e.preventDefault(); // Prevent navigation
+      e.preventDefault(); // Prevent navigation if not logged in
       toast.error("You need to be logged in to create a post!", {
         position: "bottom-right",
         autoClose: 3000,
       });
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-900 text-white font-poppins">

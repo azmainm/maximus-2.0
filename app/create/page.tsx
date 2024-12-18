@@ -2,10 +2,10 @@
 "use client";
 import CreatePost from './components/CreatePost';
 import Navbar from "../ui/Navbar";
-import useAuthCheck from "../hooks/useAuthCheck";
+//import useAuthCheck from "../hooks/useAuthCheck";
 
 const CreatePage = () => {
-  useAuthCheck();
+  //useAuthCheck();
 
   return (
     <div>

@@ -155,16 +155,22 @@ const Login = () => {
           Sign in with Google
         </button>
         </div>
-        <div className="mt-3 text-left text-xs"><span className="text-cyan-300">Note: </span>If you have signed up with Google, please sign in with Google as well.</div>
+        {/* <div className="mt-3 text-left text-xs"><span className="text-cyan-300">Note: </span>If you have signed up with Google, please sign in with Google as well.</div> */}
 
         <div className="mt-6 text-center">
-          <p>
-            Do not have an account?{" "}
-            <Link href="/signup" className="text-cyan-500 hover:text-cyan-400">
-              Sign Up
-            </Link>
-          </p>
-        </div>
+  <p>
+    Do not have an account?{" "}
+    <Link href="/signup" className="text-cyan-500 hover:text-cyan-400">
+      Sign Up
+    </Link>
+  </p>
+  <p className="mt-2">
+    <Link href="/forgotpassword" className="text-cyan-500 hover:text-cyan-400">
+      Forgot Password?
+    </Link>
+  </p>
+</div>
+
       </div>
     </div>
     </div>

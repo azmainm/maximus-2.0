@@ -6,12 +6,12 @@ import path from "path";
 export async function POST(request: Request) {
   try {
     const data = await request.json();
-    console.log("Received data:", data); // Debug log
+    console.log("Received data:", data); 
 
     const { workoutType, sex, age, weight, duration, durationUnit } = data;
 
     if (!workoutType || !sex || !age || !weight || !duration || !durationUnit) {
-      console.error("Validation error: Missing fields"); // Debug log
+      console.error("Validation error: Missing fields"); 
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
