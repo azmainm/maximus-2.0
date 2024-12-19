@@ -74,13 +74,13 @@ const SignUp = () => {
       }, 2000); // Wait for the toast to display before routing
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error("Firebase error during sign-up:", error.message);
+        //console.error("Firebase error during sign-up:", error.message);
         toast.error(`An error occured. Plase try again.`,{
           position: "bottom-right",
           autoClose: 3000,
         });
       } else {
-        console.error("Unknown error during sign-up:", error);
+        //console.error("Unknown error during sign-up:", error);
         toast.error("An unknown error occurred. Plase try again.",{
           position: "bottom-right",
           autoClose: 3000,
@@ -118,13 +118,13 @@ const SignUp = () => {
       }, 2000);
     } catch (error: unknown) {
       if (error instanceof FirebaseError) {
-        console.error("Firebase error during Google sign-up:", error.message);
+        //console.error("Firebase error during Google sign-up:", error.message);
         toast.error(`An error occurred. Please try again.`, {
           position: "bottom-right",
           autoClose: 3000,
         });
       } else {
-        console.error("Unknown error during Google sign-up:", error);
+        //console.error("Unknown error during Google sign-up:", error);
         toast.error("An unknown error occurred. Please try again.", {
           position: "bottom-right",
           autoClose: 3000,

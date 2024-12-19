@@ -44,7 +44,7 @@ const Login = () => {
       }
 
       // Log the user information (optional)
-      console.log("User logged in:", user);
+      //console.log("User logged in:", user);
 
       toast.success("Login successful!", {
         position: "bottom-right",
@@ -54,13 +54,13 @@ const Login = () => {
     } catch (error) {
       // Handle errors and display toast messages
       if (error instanceof Error) {
-        console.error("Error during login:", error.message);
+        //console.error("Error during login:", error.message);
         toast.error(`Incorrect credentials. Please try again.`, {
           position: "bottom-right",
           autoClose: 3000,
         });
       } else {
-        console.error("Unknown error during login:", error);
+        //console.error("Unknown error during login:", error);
         toast.error("An unknown error occurred.", {
           position: "bottom-right",
           autoClose: 3000,

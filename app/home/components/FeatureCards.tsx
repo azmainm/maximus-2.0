@@ -23,7 +23,7 @@ const FeatureCards = () => {
     },
     {
       title: "Blog",
-      description: "Read articles on health, fitness and well-being.",
+      description: "Read and write articles on philosophy, health, fitness and well-being.",
       icon: <FaBook className="text-gray-300 text-5xl mb-4" />,
     },
   ];

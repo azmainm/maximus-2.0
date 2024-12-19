@@ -50,7 +50,7 @@ import { useAuth } from "../context/AuthContext";
           { name: "Login", href: "/login" },
           { name: "Sign Up", href: "/signup" }
         ];
-        console.log(isLoggedIn+" from navbar")
+        //console.log(isLoggedIn+" from navbar")
   
     return (
       <nav className="bg-gray-900 text-white">

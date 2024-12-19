@@ -37,9 +37,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
             if (userDocSnap.exists()) {
               setUserId(userDocSnap.id); // Save the Firestore document ID
-              console.log(`Logged in userId: ${userDocSnap.id}`);
+              //console.log(`Logged in userId: ${userDocSnap.id}`);
             } else {
-              console.log("No Firestore document found for this user.");
+              //console.log("No Firestore document found for this user.");
             }
           } catch (error) {
             console.error("Error fetching user document:", error);
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           setUserId(null);
         }
 
-        console.log(user ? `User logged in: ${user.displayName}` : "No user logged in");
+        //console.log(user ? `User logged in: ${user.displayName}` : "No user logged in");
       };
 
       // Call the asynchronous function

@@ -128,7 +128,7 @@ const BlogPage = () => {
       {/* Article Cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 px-6 py-4 max-w-6xl mx-auto">
       {filteredArticles.map((article) => {
-  console.log(article.id);  // Log the IDs to check for duplicates
+  //console.log(article.id);  // Log the IDs to check for duplicates
   return (
     <div
       key={article.id}
