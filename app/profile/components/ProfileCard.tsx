@@ -71,6 +71,32 @@ const ProfileCard = () => {
   const handleSave = async () => {
     if (!userId || !editedUserInfo) return;
 
+     // Validation for height and weight
+    const heightPattern = /^(\d+(\.\d+)?\s?(cm|feet\s?\d+\s?inches))$/i;
+    const weightPattern = /^(\d+(\.\d+)?\s?(kg|lbs))$/i;
+
+    if (
+      editedUserInfo.height &&
+      !heightPattern.test(editedUserInfo.height.toString())
+    ) {
+      toast.error("Height must include a unit (e.g., '170 cm' or '5 feet 7 inches').", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+  
+    if (
+      editedUserInfo.weight &&
+      !weightPattern.test(editedUserInfo.weight.toString())
+    ) {
+      toast.error("Weight must include a unit (e.g., '77 kg' or '170 lbs').", {
+        position: "bottom-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+
     try {
       // Update Firestore with new values
       const userDocRef = doc(db, "users", userId);

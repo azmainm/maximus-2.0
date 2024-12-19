@@ -53,23 +53,27 @@ const WorkoutForm = () => {
               setSex(userData.sex || "Male");
               setAge(userData.age || "");
   
-              // Handle weight: Remove any non-numeric characters and convert to a number
-              const weight = userData.weight
-                ? userData.weight.replace(/[^0-9.-]+/g, "") // Remove non-numeric characters
-                : "";
-              setWeight(weight); // Set the cleaned string to weight (still a string)
+              // Handle weight and unit
+            if (userData.weight) {
+              const weightMatch = userData.weight.match(/(\d+\.?\d*)\s?(kg|lbs)?/i);
+              if (weightMatch) {
+                const [, numericWeight, unit] = weightMatch;
+                setWeight(numericWeight || ""); // Set numeric part
+                setWeightUnit(unit ? unit.toLowerCase() : "kg"); // Default to kg if no unit
+              }
             }
-          } else {
-            console.log("No user document found");
           }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+        } else {
+          console.log("No user document found");
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
-    };
-  
-    fetchUserData();
-  }, [isLoggedIn, userId]);
+    }
+  };
+
+  fetchUserData();
+}, [isLoggedIn, userId]);
   
   
   // Handle search within dropdown
